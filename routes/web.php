@@ -7,6 +7,7 @@ use App\Http\Controllers\EmpresasValvulasController;
 use App\Http\Controllers\MarcasValvulasController;
 use App\Http\Controllers\ValvulasController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 Route::get('/', function () {
     if (auth()->check()) {
@@ -55,4 +56,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/onworikingview', function () {
         return view('admin.onworkingview');
     })->name('onworikingview');
+});
+
+Route::get('/clear-cache', function () {
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    return 'Cache cleared!';
 });
