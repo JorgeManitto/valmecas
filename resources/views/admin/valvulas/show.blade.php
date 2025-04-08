@@ -63,18 +63,37 @@
       <label class="block">Recepciona: <input type="text" class="w-full bg-gray-200 p-2 rounded" name="recepciona" value="{{$valvula->recepciona}}"></label>
       <label class="block">
         Fecha Entrada: 
+        @if ($valvula->fentra)
+        
         <input 
           type="date" 
           class="w-full bg-gray-200 p-2 rounded" 
           name="fentra" 
           value="{{ \Carbon\Carbon::createFromFormat('d-m-Y', $valvula->fentra)->format('Y-m-d') }}">
-      </label>
-      <label class="block">Fecha Salida: 
+
+        @else
         <input 
           type="date" 
           class="w-full bg-gray-200 p-2 rounded" 
-          name="fsalida" 
-          value="{{ \Carbon\Carbon::createFromFormat('d-m-Y', $valvula->fsalida)->format('Y-m-d') }}">
+          name="fentra" 
+          value="">
+        @endif
+        
+      </label>
+      <label class="block">Fecha Salida: 
+        @if ($valvula->fsalida)
+          <input 
+            type="date" 
+            class="w-full bg-gray-200 p-2 rounded" 
+            name="fsalida" 
+            value="{{ \Carbon\Carbon::createFromFormat('d-m-Y', $valvula->fsalida)->format('Y-m-d') }}">
+        @else
+          <input 
+            type="date" 
+            class="w-full bg-gray-200 p-2 rounded" 
+            name="fsalida" 
+            value="">
+        @endif
       </label>      
   </div>
 

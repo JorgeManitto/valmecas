@@ -38,6 +38,22 @@
 
               </div>
             </div>
+            <div>
+              <div class="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center">
+                <i data-lucide="shopping-cart" class="h-4 w-4 mr-3 flex-shrink-0"></i>
+                  Pedidos
+              </div>
+              <div class="space-y-1">
+                <a href="{{ route('onworikingview') }}" class="flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#1F1F23]"
+                @if (request()->routeIs('archivos'))
+                  style="background-color: #E5E7EB; color: #111827;"
+                @endif
+                >
+                Base De Datos Pedidos
+                </a>
+
+              </div>
+            </div>
 
             <div>
               <div class="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center">
@@ -82,12 +98,22 @@
                 Purgadores
               </div>
               <div class="space-y-1">
-                <a href="{{ route('onworikingview') }}" class="flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#1F1F23]"
+                <a href="{{ route('purgadores') }}" class="flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#1F1F23]"
                 @if (request()->routeIs('purgadores'))
                   style="background-color: #E5E7EB; color: #111827;"
                 @endif
                 >
                 Listado De Purgadores
+                </a>
+
+              </div>
+              <div class="space-y-1">
+                <a href="{{ route('onworikingview') }}" class="flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#1F1F23]"
+                @if (request()->routeIs('purgadores'))
+                  style="background-color: #E5E7EB; color: #111827;"
+                @endif
+                >
+                Informe De Auditoría 
                 </a>
 
               </div>
@@ -98,7 +124,7 @@
                 Equipo
               </div>
               <div class="space-y-1">
-                <a href="{{ route('onworikingview') }}" class="flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#1F1F23]">
+                <a href="{{ route('usuarios') }}" class="flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#1F1F23]">
                   <i data-lucide="users-2" class="h-4 w-4 mr-3 flex-shrink-0"></i>
                   Miembros
                 </a>

@@ -5,6 +5,8 @@ use App\Http\Controllers\ArchivosController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmpresasValvulasController;
 use App\Http\Controllers\MarcasValvulasController;
+use App\Http\Controllers\PurgadoresController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValvulasController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
@@ -49,7 +51,24 @@ Route::middleware(['auth'])->group(function () {
     Route::put('admin/marcas/valvulas/{id}', [MarcasValvulasController::class, 'update'])->name('marcas.valvulas.update');
     Route::delete('admin/marcas/valvulas/{id}', [MarcasValvulasController::class, 'destroy'])->name('marcas.valvulas.destroy');
     
+    // Purgadores
+    Route::get('admin/purgadores', [PurgadoresController::class, 'index'])->name('purgadores');
+    Route::get('admin/purgadores/create', [PurgadoresController::class, 'create'])->name('purgadores.create');
+    Route::post('admin/purgadores', [PurgadoresController::class, 'store'])->name('purgadores.store');
+    Route::get('admin/purgadores/{id}/edit', [PurgadoresController::class, 'edit'])->name('purgadores.edit');
+    Route::put('admin/purgadores/{id}', [PurgadoresController::class, 'update'])->name('purgadores.update');
+    Route::delete('admin/purgadores/{id}', [PurgadoresController::class, 'destroy'])->name('purgadores.destroy');
+    Route::get('admin/purgadores/{id}', [PurgadoresController::class, 'show'])->name('purgadores.show');
 
+    Route::resource('admin/usuarios', UserController::class)->names([
+        'index' => 'usuarios',
+        'create' => 'usuarios.create',
+        'store' => 'usuarios.store',
+        'show' => 'usuarios.show',
+        'edit' => 'usuarios.edit',
+        'update' => 'usuarios.update',
+        'destroy' => 'usuarios.destroy'
+    ]);
 
     Route::get('admin/archivos', [ArchivosController::class, 'index'])->name('archivos');
 

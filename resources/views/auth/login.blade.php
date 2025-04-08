@@ -16,29 +16,20 @@
 </head>
 <body>
   <div class="grid min-h-svh lg:grid-cols-2">
-    <div class="flex flex-col gap-4 p-6 md:p-10">
-      <div class="flex justify-center gap-2 md:justify-start">
-        <a href="{{ route('home', ['id'=>1]) }}" class="flex items-center gap-2 font-medium">
-          <div class="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4">
-              <path d="M2 20h20"/>
-              <path d="M5 4v6"/>
-              <path d="M5 14v2"/>
-              <path d="M12 4v2"/>
-              <path d="M12 10v6"/>
-              <path d="M19 4v10"/>
-              <path d="M19 18v2"/>
-            </svg>
-          </div>
-          Valmecas
-        </a>
-      </div>
+    <div class="flex flex-col gap-4 p-6 md:p-10">      
       <div class="flex flex-1 items-center justify-center">
         <div class="w-full max-w-xs">
-          <form class="flex flex-col gap-6" method="POST" action="{{ route('login.post') }}">
+          <form class="flex flex-col gap-6" method="POST" id="formLogin" action="{{ route('login.post') }}">
             @csrf
             <div class="flex flex-col items-center gap-2 text-center">
-              <h1 class="text-2xl font-bold">Ingresa a tu cuenta de Valmecas</h1>
+              <a href="{{ route('home', ['id'=>1]) }}" class="mb-4">
+                <img
+                    src="{{ asset('logoweb2-old.png') }}"
+                    alt="Laravel Logo"
+                    class="object-contain m-auto"
+                    loading="lazy"
+                />
+              </a>
               <p class="text-balance text-sm text-muted-foreground">
                 Ingresa tus credenciales para acceder a tu cuenta.
               </p>
@@ -73,7 +64,8 @@
                 </div>
                 <input id="password" type="password" name="password" required class="flex h-10 w-full rounded-md border border-gray-300  bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
               </div>
-              <button type="submit" class="inline-flex bg-gray-600 items-center justify-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full cursor-pointer text-white font-bold shadow-sm hover:shadow-md focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:outline-none">
+              <button type="submit" class="inline-flex bg-gray-600 items-center justify-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full cursor-pointer text-white font-bold shadow-sm hover:shadow-md focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:outline-none gap-4">
+                <div class="loader"></div>
                 Ingresar
               </button>
 
@@ -88,5 +80,33 @@
     </div>
   </div>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loader = document.querySelector('.loader');
+      const button = document.querySelector('button[type="submit"]');
+      const form = document.getElementById('formLogin');
+      button.addEventListener('click', function() {
+        loader.style.display = 'block';
+        button.disabled = true; // Disable the button to prevent multiple clicks
+        form.submit(); // Submit the form
+      });
+    });
+  </script>
+  <style>
+    .loader {
+      display: none;
+      width: 20px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: 
+        radial-gradient(farthest-side,#ffa516 94%,#0000) top/4px 4px no-repeat,
+        conic-gradient(#0000 30%,#ffa516);
+      -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 4px),#000 0);
+      animation: l13 1s infinite linear;
+    }
+    @keyframes l13{ 
+      100%{transform: rotate(1turn)}
+    }
+  </style>
 </body>
 </html>
