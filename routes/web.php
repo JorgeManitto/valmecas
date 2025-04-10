@@ -30,10 +30,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/valvulas', [ValvulasController::class, 'index'])->name('valvulas');
     Route::get('admin/valvulas/create', [ValvulasController::class, 'create'])->name('valvulas.create');
     Route::post('admin/valvulas', [ValvulasController::class, 'store'])->name('valvulas.store');
-    Route::get('admin/valvulas/{id}/edit', [ValvulasController::class, 'edit'])->name('valvulas.edit');
-    Route::put('admin/valvulas/{id}', [ValvulasController::class, 'update'])->name('valvulas.update');
-    Route::delete('admin/valvulas/{id}', [ValvulasController::class, 'destroy'])->name('valvulas.destroy');
-    Route::get('admin/valvulas/{id}', [ValvulasController::class, 'show'])->name('valvulas.show');
+    Route::get('admin/valvulas/{id?}/edit', [ValvulasController::class, 'edit'])->name('valvulas.edit');
+    Route::put('admin/valvulas/{id?}', [ValvulasController::class, 'update'])->name('valvulas.update');
+    Route::delete('admin/valvulas/{id?}', [ValvulasController::class, 'destroy'])->name('valvulas.destroy');
+    Route::get('admin/valvulas/{id?}', [ValvulasController::class, 'show'])->name('valvulas.show');
 
     // Empresas vavulas
     Route::get('admin/clientes/valvulas', [EmpresasValvulasController::class, 'index'])->name('clientes.valvulas');

@@ -1,5 +1,13 @@
 @extends('admin.layout')
 @section('content') 
+@php
+    
+@endphp
+<form action="{{ route($method) }}" method="post">
+  @csrf
+  @if ($method == 'valvulas.update')
+    @method('PUT')
+  @endif
 
 <div class="max-w-4xl mx-auto p-6 rounded-lg shadow-lg bg-white">
   <div class="grid md:grid-cols-3 gap-4 border-b pb-4 mb-4 items-center">
@@ -364,11 +372,21 @@
 @include('admin.valvulas.componets.form-13')
 @include('admin.valvulas.componets.form-14')
 
-<div class="sticky bottom-0 flex justify-end">
 
-  <button class="bg-green-700 text-white font-semibold rounded-lg p-2">Guardar</button>
+<div class="sticky bottom-0 flex justify-end gap-4">
+  <a href="{{ route('valvulas') }}" class="bg-gray-700 text-white font-semibold rounded-lg p-2 cursor-pointer">Volver</a>
+  @if ($method == 'valvulas.update')
+    <button class="bg-green-700 text-white font-semibold rounded-lg p-2 cursor-pointer" type="submit">Guardar</button>
+  @else 
+    @if ($method == 'valvulas.store')
+    <button class="bg-blue-700 text-white font-semibold rounded-lg p-2 cursor-pointer" type="submit">Crear</button>
+
+    @else
+    <a href="{{ route('valvulas.edit', ['id'=>$valvula->id]) }}" class="bg-yellow-700 text-white font-semibold rounded-lg p-2">Editar</a>
+    @endif
+  @endif
 </div>
-
+</form>
 @endsection
 
  

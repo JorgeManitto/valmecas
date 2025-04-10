@@ -33,7 +33,9 @@ class Valvula extends Model
         'materialasiento',
         'tipounion',
         'materialcierre',
-        'tipocierre',
+        'tipocierre'
     ];
     protected $table = 'valvulas';
+
+    public $timestamps = false;
 }

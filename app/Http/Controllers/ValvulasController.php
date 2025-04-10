@@ -16,6 +16,8 @@ class ValvulasController extends Controller
     {
         $empresa_select = $request->input('empresa_select');
         $modelo_select = $request->input('modelo_select');
+
+        $finalizada = $request->input('finalizada');
         
         $search = $request->input('search');
         $valvulas = Valvula::query()
@@ -28,6 +30,9 @@ class ValvulasController extends Controller
         ->when($modelo_select, function ($query) use ($modelo_select) {
             $query->whereRaw('LOWER(modelo) LIKE LOWER(?)', ['%' . $modelo_select . '%']);
         })
+        ->when($finalizada, function ($query) use ($finalizada) {
+            $query->where('finaliz', 'like', '%' . $finalizada . '%');
+        })
         ->orderBy('id', 'desc')        
         ->paginate(25);
 
@@ -35,7 +40,7 @@ class ValvulasController extends Controller
         $empresas   = EmpresasValvula::where('estado', 'activo')->get();
         $modelos    = MarcaValvula::where('estado', 'activo')->get();
         
-        return view('admin.valvulas.index', compact('valvulas', 'search', 'empresas','empresa_select','modelo_select','modelos'));
+        return view('admin.valvulas.index', compact('valvulas', 'search', 'empresas','empresa_select','modelo_select','modelos', 'finalizada'));
     }
 
     /**
@@ -43,7 +48,11 @@ class ValvulasController extends Controller
      */
     public function create()
     {
-        return view('admin.valvulas.create');
+        $method = 'valvulas.store';
+        $valvula = new Valvula();
+        $empresas   = EmpresasValvula::where('estado', 'activo')->get();
+        $modelos    = MarcaValvula::where('estado', 'activo')->get();
+        return view('admin.valvulas.show', compact('valvula','method','empresas','modelos'));
     }
 
     /**
@@ -51,63 +60,41 @@ class ValvulasController extends Controller
      */
     public function store(Request $request)
     {
-        $params = [
-            'storage_id'        => $request->input('storage_id'),
-            'user_id'           => $request->input('user_id'),
-            'created'           => $request->input('created'),
-            'created_by'        => $request->input('created_by'),
-            'modified_user_id'  => $request->input('modified_user_id'),
-            'modified'          => $request->input('modified'),
-            'modified_by'       => $request->input('modified_by'),
-            'tag'               => $request->input('tag'),
-            'oferta'            => $request->input('oferta'),
-            'cliente'           => $request->input('cliente'),
-            'ident'             => $request->input('ident'),
-            'finaliz'           => $request->input('finaliz'),
-            'wo'                => $request->input('wo'),
-            'recepciona'        => $request->input('recepciona'),
-            'fentra'            => $request->input('fentra'),
-            'fsalida'           => $request->input('fsalida'),
-            'sector'            => $request->input('sector'),
-            'tag_item'          => $request->input('tag_item'),
-            'modelo'            => $request->input('modelo'),
-            'tipo'              => $request->input('tipo'),
-            'diametro'          => $request->input('diametro'),
-            'accionamiento'     => $request->input('accionamiento'),
-            'rating'            => $request->input('rating'),
-            'materialasiento'   => $request->input('materialasiento'),
-            'tipounion'         => $request->input('tipounion'),
-            'materialcierre'    => $request->input('materialcierre'),
-            'tipocierre'        => $request->input('tipocierre'),
-        ];
+        // $valvula = Valvula::create($request->all());
+        return redirect()->route('valvulas')->with('success', 'Esta función aun no esta implementada');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id = '')
     {
+        $method = 'valvulas.show';
         $valvula = Valvula::findOrFail($id);
         $empresas   = EmpresasValvula::where('estado', 'activo')->get();
         $modelos    = MarcaValvula::where('estado', 'activo')->get();
         // dd($valvula);
-        return view('admin.valvulas.show', compact('valvula','empresas','modelos'));
+        return view('admin.valvulas.show', compact('valvula','empresas','modelos','method'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id = '')
     {
-        //
+        $method = 'valvulas.update';
+        $valvula = Valvula::findOrFail($id);
+        $empresas   = EmpresasValvula::where('estado', 'activo')->get();
+        $modelos    = MarcaValvula::where('estado', 'activo')->get();
+        return view('admin.valvulas.show', compact('valvula','method','empresas','modelos'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        return redirect()->route('valvulas')->with('success', 'Esta función aun no esta implementada');
     }
 
     /**

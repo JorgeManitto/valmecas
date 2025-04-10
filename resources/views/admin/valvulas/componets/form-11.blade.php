@@ -2,7 +2,13 @@
   <div class="mb-4">
       <label class="block  text-sm font-bold mb-2">PRE-POPPING</label>
       <select class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option>Selecciona</option>
+        <option>Selecciona</option>
+        <option @selected($valvula->prepopping == 'Ok') value="Ok">Ok</option>
+        <option @selected($valvula->prepopping == 'Fuga') value="Fuga">Fuga</option>
+        <option @selected($valvula->prepopping == 'Bloqueada') value="Bloqueada">Bloqueada</option>
+        <option @selected($valvula->prepopping == 'No dispara a presion de set') value="No dispara a presion de set">No dispara a presion de set</option>
+        <option @selected($valvula->prepopping == 'Abierta') value="Abierta">Abierta</option>
+        <option @selected($valvula->prepopping == 'No reobtura') value="No reobtura">No reobtura (APUNTAR PRESION DISPARO)</option>
       </select>
   </div>
 
@@ -10,32 +16,36 @@
       <div>
           <label class="block  text-sm font-bold mb-1">FLUIDO DE PRUEBA</label>
           <select class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option>Selecciona</option>
+              <option value="">Selecciona</option>
+              <option value="Agua">Agua</option>
+              <option value="Nitrogeno Aire">Nitrogeno Aire</option>
+              <option value="Gasoil">Gasoil</option>
+              <option value="Aceite">Aceite</option>
           </select>
       </div>
       <div>
           <label class="block  text-sm font-bold mb-1">PRESIÓN DE DISPARO</label>
-          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{$valvula->svprdisp}}" name="svprdisp">
       </div>
       <div>
           <label class="block  text-sm font-bold mb-1">CRITERIO DE ACEPTACIÓN (%)</label>
-          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" value="3">
+          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" value="{{$valvula->svcriteracep}}" name="svcriteracep">
       </div>
       <div>
           <label class="block  text-sm font-bold mb-1">PRESIÓN DE FUGA LÍMITE 90%</label>
-          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" name="svprfuga90" value="{{$valvula->svprfuga90}}">
       </div>
       <div>
           <label class="block  text-sm font-bold mb-1">LÍMITE SUPERIOR</label>
-          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" name="svlimsup" value="{{$valvula->svlimsup}}">
       </div>
       <div>
           <label class="block  text-sm font-bold mb-1">FUGA PERMITIDA</label>
-          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" name="svfugperm" value="{{$valvula->svfugperm}}">
       </div>
       <div>
           <label class="block  text-sm font-bold mb-1">LÍMITE INFERIOR</label>
-          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" name="svliminf" value="{{$valvula->svliminf}}">
       </div>
       <div>
           <label class="block  text-sm font-bold mb-1">PRUEBA FUELLE (A+TAG)</label>

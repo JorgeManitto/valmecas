@@ -17,7 +17,7 @@
     <script>
         setTimeout(() => {
             document.getElementById('successMessage')?.remove();
-        }, 3000);
+        }, 6000);
     </script>
   @endif
   <form action="" method="get" id="filterForm">
@@ -55,10 +55,21 @@
           <button type="submit" class="rounded-lg bg-red-600 text-white cursor-pointer" style="padding: 0.4em;border-radius: 0 10px 10px 0;">Buscar</button>
         </div>
       </div>
-      <div class="md:flex items-center gap-2">
-        <button class="rounded-lg text-white flex items-center cursor-pointer px-4 w-full mb-3 py-2 border-gray-200 dark:border-[#2B2B30] bg-white dark:bg-[#1F1F23]">
+      <div class="md:flex items-center gap-2 relative"  x-data="{ openFilters: false }">
+        <button @click="openFilters = !openFilters" type="button" class="rounded-lg text-white flex items-center cursor-pointer px-4 w-full mb-3 py-2 border-gray-200 dark:border-[#2B2B30] bg-white dark:bg-[#1F1F23]">
           <i data-lucide="funnel" class="h-4 w-4 mr-3 flex-shrink-0"></i> Filtros
         </button>
+        <div class="absolute left-0 mt-2 p-6 bg-white dark:bg-[#1F1F23] border border-gray-200 dark:border-[#2B2B30] rounded-lg shadow-md z-10" style="top: 28px;" 
+        x-show="openFilters" @click.away="openFilters = false">
+          <div class="mb-3">
+            <label for="finalizada" class="text-white">Finalizada:</label>
+            <select name="finalizada" id="" onchange="document.getElementById('filterForm').submit();" class="w-full md:w-auto rounded-lg text-black flex items-center cursor-pointer py-2 border-gray-200 bg-white">
+              <option value="">Mostrar todas</option>
+              <option @selected($finalizada == 'Si') value="Si">Si</option>
+              <option @selected($finalizada == 'No') value="No">No</option>
+            </select>
+          </div>
+        </div>
         <button class="rounded-lg text-white flex items-center cursor-pointer px-4 w-full mb-3 py-2 border-gray-200 dark:border-[#2B2B30] bg-white dark:bg-[#1F1F23]">
           <i data-lucide="download" class="h-4 w-4 mr-2"></i> Exportar
         </button>
@@ -117,7 +128,7 @@
                 <!-- Dropdown -->
                 <div x-show="open" @click.away="open = false"
                   class="absolute right-0 mt-2 w-36 bg-white dark:bg-[#1F1F23] border border-gray-200 dark:border-[#2B2B30] rounded-lg shadow-md z-10" style="top: -26px;">
-                  <a href="{{ route('valvulas.show', $valvula->id) }}" 
+                  <a href="{{ route('valvulas.edit', $valvula->id) }}" 
                      class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2B2B30]">
                     Editar
                   </a>

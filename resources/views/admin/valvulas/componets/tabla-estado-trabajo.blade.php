@@ -1,5 +1,24 @@
 <div class="max-w-4xl mx-auto p-6 rounded-lg shadow-lg bg-white">
-
+    @php
+        $solicita_repuesto = [
+            'CORRECTO' => 'CORRECTO',
+            'ROTO' => 'ROTO',
+            'AGRIETADO' => 'AGRIETADO',
+            'CORROSION LEVE' => 'CORROSION LEVE',
+            'CORROSION SEVERA' => 'CORROSION SEVERA',
+            'DESGASTADO' => 'DESGASTADO',
+            'MARCADO' => 'MARCADO',
+            'FALTA' => 'FALTA',
+            'SUCIO' => 'SUCIO',
+        ];
+        $trabajo_realizado = [
+            'Sustituido' => 'Sustituido',
+            'Lapea' => 'Lapea',
+            'Reparado' => 'Reparado',
+            'Limpiado' => 'Limpiado',
+            'Chorreado-pintado' => 'Chorreado-pintado',
+        ];
+    @endphp
     <div class="overflow-x-auto">
         <table class="w-full">
           <thead>
@@ -25,15 +44,19 @@
                       </div>
                   </td>
                   <td class="p-2">
-                      <select class="w-full border p-1 rounded">
-                          <option>Selecciona</option>
-                          <option>Selecciona</option>
+                      <select class="w-full border p-1 rounded" name="estcuerpo1">
+                        <option value="">Selecciona</option>
+                        @foreach ($solicita_repuesto as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estcuerpo1)>{{ $value }}</option>
+                        @endforeach
                       </select>
                   </td>
                   <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estcuerpo2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estcuerpo2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                   </td>
               </tr>
@@ -53,14 +76,18 @@
                   </td>
                     <td class="p-2">
                         <select class="w-full border p-1 rounded">
-                            <option>Selecciona</option>
-                            <option>Selecciona</option>
+                            <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estbridas1)>{{ $value }}</option>
+                            @endforeach
                         </select>
                     </td>
                     <td class="p-2">
                     <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estbridas2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                     </td>
               </tr>
@@ -80,14 +107,18 @@
                   </td>
                     <td class="p-2">
                         <select class="w-full border p-1 rounded">
-                            <option>Selecciona</option>
-                            <option>Selecciona</option>
+                            <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estasiencuer1)>{{ $value }}</option>
+                            @endforeach
                         </select>
                     </td>
                     <td class="p-2">
                     <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estasiencuer2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                     </td>
               </tr>
@@ -107,14 +138,18 @@
                 </td>
                 <td class="p-2">
                     <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estasienobtu1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
                     <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estasienobtu2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -134,14 +169,18 @@
                 </td>
                 <td class="p-2">
                     <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estsopor1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
                     <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estsopor2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -160,46 +199,23 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="esthusillo1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->esthusillo1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="esthusillo2">
+                         <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->esthusillo2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
             
-            <tr>
-                <td class="p-2">
-                    <div class="flex items-center">
-                        <span class="mr-2 font-bold">HUSILLO / EJE (SV's)</span>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" id="husillo_eje_solicita" class="mr-2">
-                        <label for="husillo_eje_solicita">¿SOLICITA REPUESTO?</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input type="checkbox" id="husillo_eje_utiliza" class="mr-2">
-                        <label for="husillo_eje_utiliza">¿UTILIZA REPUESTO?</label>
-                    </div>
-                </td>
-                <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
-                    </select>
-                </td>
-                <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
-                    </select>
-                </td>
-            </tr>
             
             <tr>
                 <td class="p-2">
@@ -216,15 +232,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="esttuerca1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->esttuerca1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="esttuerca2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->esttuerca2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -244,15 +264,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estpuente1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estpuente1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estpuente2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estpuente2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -272,15 +296,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estreduc1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estreduc1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estreduc2">
+                         <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estreduc2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -300,15 +328,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estjuntacuerp1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estjuntacuerp1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estjuntacuerp2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estjuntacuerp2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -328,15 +360,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estesparr1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estesparr1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estesparr2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estesparr2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -356,15 +392,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estbackseat1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estbackseat1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estbackseat2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estbackseat2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -384,15 +424,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estresorte1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estresorte1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estresorte2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estresorte2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -412,15 +456,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estempaque1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estempaque1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estempaque2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estempaque2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -440,15 +488,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estlinter1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estlinter1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estlinter2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estlinter2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -468,15 +520,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estprensa1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estprensa1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estprensa2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estprensa2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -496,15 +552,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estvolant1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estvolant1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estvolant2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estvolant2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -524,15 +584,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estfuelle1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estfuelle1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estfuelle2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estfuelle2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>
@@ -552,15 +616,19 @@
                     </div>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                    <select class="w-full border p-1 rounded" name="estguias1">
+                        <option value="">Selecciona</option>
+                            @foreach ($solicita_repuesto as $key => $value)
+                                <option value="{{ $key }}" @selected($value == $valvula->estguias1)>{{ $value }}</option>
+                            @endforeach
                     </select>
                 </td>
                 <td class="p-2">
-                    <select class="w-full border p-1 rounded">
-                        <option>Selecciona</option>
-                        <option>Selecciona</option>
+                   <select class="w-full border p-1 rounded" name="estguias2">
+                        <option value="">Selecciona</option>
+                        @foreach ($trabajo_realizado as $key => $value)
+                            <option value="{{ $key }}" @selected($value == $valvula->estguias2)>{{ $value }}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>

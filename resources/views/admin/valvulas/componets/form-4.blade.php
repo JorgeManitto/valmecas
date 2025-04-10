@@ -54,54 +54,54 @@
             <tr class="border-b border-gray-700">
               <td class="p-2 font-semibold">ARNÉS:</td>
               <td class="md:p-2">
-                <label class="md:mr-4"><input type="radio" name="arnes" class="mr-1" checked> No Aplica</label>
-                <label class="md:mr-4"><input type="radio" name="arnes" class="mr-1"> Sí</label>
-                <label><input type="radio" name="arnes" class="mr-1"> No</label>
+                <label class="md:mr-4"><input type="radio" name="montdesm_arnes" class="mr-1" @checked($valvula->montdesm_arnes == 'No Aplica')> No Aplica</label>
+                <label class="md:mr-4"><input type="radio" name="montdesm_arnes" class="mr-1" @checked($valvula->montdesm_arnes == 'Si')> Sí</label>
+                <label><input type="radio" name="montdesm_arnes" class="mr-1" @checked($valvula->montdesm_arnes == 'No')> No</label>
               </td>
             </tr>
   
             <tr class="border-b border-gray-700">
               <td class="p-2 font-semibold">ANDAMIO:</td>
               <td class="md:p-2">
-                <label class="md:mr-4"><input type="radio" name="andamio" class="mr-1" checked> No Aplica</label>
-                <label class="md:mr-4"><input type="radio" name="andamio" class="mr-1"> Sí</label>
-                <label><input type="radio" name="andamio" class="mr-1"> No</label>
+                <label class="md:mr-4"><input type="radio" name="montdesm_andamio" class="mr-1"  @checked($valvula->montdesm_andamio == 'No Aplica')> No Aplica</label>
+                <label class="md:mr-4"><input type="radio" name="montdesm_andamio" class="mr-1" @checked($valvula->montdesm_andamio == 'Si')> Sí</label>
+                <label><input type="radio" name="montdesm_andamio" class="mr-1" @checked($valvula->montdesm_andamio == 'No')> No</label>
               </td>
             </tr>
   
             <tr class="border-b border-gray-700">
               <td class="p-2 font-semibold">GRÚA:</td>
               <td class="md:p-2">
-                <label class="md:mr-4"><input type="radio" name="grua" class="mr-1" checked> No Aplica</label>
-                <label class="md:mr-4"><input type="radio" name="grua" class="mr-1"> Sí</label>
-                <label><input type="radio" name="grua" class="mr-1"> No</label>
+                <label class="md:mr-4"><input type="radio" name="montdesm_grua" class="mr-1"  @checked($valvula->montdesm_grua == 'No Aplica')> No Aplica</label>
+                <label class="md:mr-4"><input type="radio" name="montdesm_grua" class="mr-1" @checked($valvula->montdesm_grua == 'Si')> Sí</label>
+                <label><input type="radio" name="montdesm_grua" class="mr-1" @checked($valvula->montdesm_grua == 'No')> No</label>
               </td>
             </tr>
   
             <tr class="border-b border-gray-700">
               <td class="p-2 font-semibold">GRÚA GRAN TONELAJE:</td>
               <td class="md:p-2">
-                <label class="md:mr-4"><input type="radio" name="grua_gran" class="mr-1" checked> No Aplica</label>
-                <label class="md:mr-4"><input type="radio" name="grua_gran" class="mr-1"> Sí</label>
-                <label><input type="radio" name="grua_gran" class="mr-1"> No</label>
+                <label class="md:mr-4"><input type="radio" name="montdesm_gruagranton" class="mr-1"  @checked($valvula->montdesm_gruagranton == 'No Aplica')> No Aplica</label>
+                <label class="md:mr-4"><input type="radio" name="montdesm_gruagranton" class="mr-1" @checked($valvula->montdesm_gruagranton == 'Si')> Sí</label>
+                <label><input type="radio" name="montdesm_gruagranton" class="mr-1" @checked($valvula->montdesm_gruagranton == 'No')> No</label>
               </td>
             </tr>
   
             <tr class="border-b border-gray-700">
               <td class="p-2 font-semibold">TRACTEL:</td>
               <td class="md:p-2">
-                <label class="md:mr-4"><input type="radio" name="tractel" class="mr-1" checked> No Aplica</label>
-                <label class="md:mr-4"><input type="radio" name="tractel" class="mr-1"> Sí</label>
-                <label><input type="radio" name="tractel" class="mr-1"> No</label>
+                <label class="md:mr-4"><input type="radio" name="montdesm_tractel" class="mr-1"  @checked($valvula->montdesm_tractel == 'No Aplica')> No Aplica</label>
+                <label class="md:mr-4"><input type="radio" name="montdesm_tractel" class="mr-1" @checked($valvula->montdesm_tractel == 'Si')> Sí</label>
+                <label><input type="radio" name="montdesm_tractel" class="mr-1" @checked($valvula->montdesm_tractel == 'No')> No</label>
               </td>
             </tr>
   
             <tr class="border-b border-gray-700">
               <td class="p-2 font-semibold">QUITAR CALORIFUGADO:</td>
               <td class="md:p-2">
-                <label class="md:mr-4"><input type="radio" name="calorifugado" class="mr-1" checked> No Aplica</label>
-                <label class="md:mr-4"><input type="radio" name="calorifugado" class="mr-1"> Sí</label>
-                <label><input type="radio" name="calorifugado" class="mr-1"> No</label>
+                <label class="md:mr-4"><input type="radio" name="quitar_calorifugado" class="mr-1"  @checked($valvula->quitar_calorifugado == 'No Aplica')> No Aplica</label>
+                <label class="md:mr-4"><input type="radio" name="quitar_calorifugado" class="mr-1" @checked($valvula->quitar_calorifugado == 'Si')> Sí</label>
+                <label><input type="radio" name="quitar_calorifugado" class="mr-1" @checked($valvula->quitar_calorifugado == 'No')> No</label>
               </td>
             </tr>
   
