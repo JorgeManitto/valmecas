@@ -13,7 +13,7 @@
     <label class="block text-sm font-semibold mb-2">
       EQUIPO UTILIZADO
     </label>
-    <select name="equipo_utilizado"  class="w-full p-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <select name="bancoutiliz"  class="w-full p-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
       <option >SELECCIONA</option>
       <option @selected($valvula->bancoutiliz == 'BANCO DORY') value="BANCO DORY">BANCO DORY</option>
       <option @selected($valvula->bancoutiliz == 'BANCO UBE CORPORATION') value="BANCO UBE CORPORATION">BANCO UBE CORPORATION</option>
@@ -26,7 +26,7 @@
     <label class="block text-sm font-semibold mb-2">
       MANOMETRO Nº
     </label>
-    <select name="manometro"  class="w-full p-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <select name="manom1"  class="w-full p-2 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
       <option >SELECCIONA</option>
       <option @selected($valvula->manom1 == 'VA-MN-001 0-10') value="VA-MN-001 0-10">VA-MN-001 0-10</option>
       <option @selected($valvula->manom1 == 'VA-MN-002 0-25') value="VA-MN-002 0-25">VA-MN-002 0-25</option>

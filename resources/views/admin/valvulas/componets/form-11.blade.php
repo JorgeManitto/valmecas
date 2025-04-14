@@ -1,7 +1,11 @@
 <div class="max-w-4xl mx-auto p-6 rounded-lg shadow-lg bg-white">
+      <!-- Sección Válvulas de Seguridad -->
+  <div class="bg-red-600 text-white text-center text-xl font-bold py-3 rounded-md mb-6">
+    VÁLVULAS DE SEGURIDAD
+    </div>
   <div class="mb-4">
       <label class="block  text-sm font-bold mb-2">PRE-POPPING</label>
-      <select class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <select class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" name="prepopping">
         <option>Selecciona</option>
         <option @selected($valvula->prepopping == 'Ok') value="Ok">Ok</option>
         <option @selected($valvula->prepopping == 'Fuga') value="Fuga">Fuga</option>
@@ -15,12 +19,12 @@
   <div class="grid grid-cols-2 gap-4  rounded-lg">
       <div>
           <label class="block  text-sm font-bold mb-1">FLUIDO DE PRUEBA</label>
-          <select class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" name="svfluidpru">
               <option value="">Selecciona</option>
-              <option value="Agua">Agua</option>
-              <option value="Nitrogeno Aire">Nitrogeno Aire</option>
-              <option value="Gasoil">Gasoil</option>
-              <option value="Aceite">Aceite</option>
+              <option @selected($valvula->svfluidpru == 'Agua') value="Agua">Agua</option>
+              <option @selected($valvula->svfluidpru == 'Nitrogeno Aire') value="Nitrogeno Aire">Nitrogeno Aire</option>
+              <option @selected($valvula->svfluidpru == 'Gasoil') value="Gasoil">Gasoil</option>
+              <option @selected($valvula->svfluidpru == 'Aceite') value="Aceite">Aceite</option>
           </select>
       </div>
       <div>
@@ -49,7 +53,7 @@
       </div>
       <div>
           <label class="block  text-sm font-bold mb-1">PRUEBA FUELLE (A+TAG)</label>
-          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <input type="text" class="w-full p-2 rounded   border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500" name="pr_fuelle" value="{{$valvula->pr_fuelle}}">
       </div>
   </div>
 </div>

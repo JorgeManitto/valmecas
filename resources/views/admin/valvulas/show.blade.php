@@ -3,13 +3,14 @@
 @php
     
 @endphp
-<form action="{{ route($method) }}" method="post">
+<form action="{{ route($method) }}" method="post" enctype="multipart/form-data" >
   @csrf
   @if ($method == 'valvulas.update')
     @method('PUT')
   @endif
 
-<div class="max-w-4xl mx-auto p-6 rounded-lg shadow-lg bg-white">
+  <input type="hidden" name="id" value="{{$valvula->id}}">
+<div class="max-w-4xl mx-auto p-6 rounded-lg shadow-lg bg-white mb-4">
   <div class="grid md:grid-cols-3 gap-4 border-b pb-4 mb-4 items-center">
       <div>
           <h1 class="font-bold text-center">CASTELLÓN VÁLVULAS Y MECANIZADOS S.L.</h1>
@@ -73,11 +74,25 @@
         Fecha Entrada: 
         @if ($valvula->fentra)
         
+        @php
+            $fecha = '';
+            try {
+                $fecha = \Carbon\Carbon::createFromFormat('d-m-Y', $valvula->fentra)->format('Y-m-d');
+            } catch (\Exception $e) {
+                // Intenta con otro formato si necesario o deja la fecha vacía
+                try {
+                    $fecha = \Carbon\Carbon::parse($valvula->fentra)->format('Y-m-d');
+                } catch (\Exception $e) {
+                    $fecha = '';
+                }
+            }
+        @endphp
+        
         <input 
           type="date" 
           class="w-full bg-gray-200 p-2 rounded" 
           name="fentra" 
-          value="{{ \Carbon\Carbon::createFromFormat('d-m-Y', $valvula->fentra)->format('Y-m-d') }}">
+          value="{{ $fecha }}">
 
         @else
         <input 
@@ -90,11 +105,25 @@
       </label>
       <label class="block">Fecha Salida: 
         @if ($valvula->fsalida)
-          <input 
-            type="date" 
-            class="w-full bg-gray-200 p-2 rounded" 
-            name="fsalida" 
-            value="{{ \Carbon\Carbon::createFromFormat('d-m-Y', $valvula->fsalida)->format('Y-m-d') }}">
+            @php
+            $fechaSalida = '';
+            try {
+                $fechaSalida = \Carbon\Carbon::createFromFormat('d-m-Y', $valvula->fsalida)->format('Y-m-d');
+            } catch (\Exception $e) {
+                // Intenta con otro formato si necesario o deja la fecha vacía
+                try {
+                    $fechaSalida = \Carbon\Carbon::parse($valvula->fsalida)->format('Y-m-d');
+                } catch (\Exception $e) {
+                    $fechaSalida = '';
+                }
+            }
+        @endphp
+        
+        <input 
+          type="date" 
+          class="w-full bg-gray-200 p-2 rounded" 
+          name="fsalida" 
+          value="{{ $fechaSalida }}">
         @else
           <input 
             type="date" 
@@ -201,7 +230,7 @@
         </select>
       </label>
       <label class="block">RATING: 
-        <select class="w-full bg-gray-200 p-2 rounded" name="juntabridaentrada">
+        <select class="w-full bg-gray-200 p-2 rounded" name="rating">
           <option value="">Selecciona</option>
           <option value="No aplica" @selected($valvula->rating == 'No aplica')>No aplica</option>
           <option value="150#" @selected($valvula->rating == '150#')>150#</option>
@@ -230,7 +259,7 @@
   <div class="grid grid-cols-2 gap-4 mt-4">
 
       <label class="block">Diámetro Salida: 
-        <select class="w-full bg-gray-200 p-2 rounded" name="diametro">
+        <select class="w-full bg-gray-200 p-2 rounded" name="diametrosalida">
           <option value="">Selecciona</option>
           <option value='1/4"' @selected($valvula->diametrosalida == '1/4"')>1/4"</option>
           <option value='1/2"' @selected($valvula->diametrosalida == '1/2"')>1/2"</option>
@@ -291,7 +320,7 @@
         </select>
       </label>
       <label class="block">RATING DE SALIDA: 
-        <select class="w-full bg-gray-200 p-2 rounded" name="juntabridaentrada">
+        <select class="w-full bg-gray-200 p-2 rounded" name="ratingsalida">
           <option value="">Selecciona</option>
           <option value="No aplica" @selected($valvula->ratingsalida == 'No aplica')>No aplica</option>
           <option value="150#" @selected($valvula->ratingsalida == '150#')>150#</option>
@@ -357,20 +386,45 @@
       </label>
   </div>
 </div>
-
-@include('admin.valvulas.componets.tabla-estado-trabajo')
-@include('admin.valvulas.componets.cliente-solicitud')
-@include('admin.valvulas.componets.form-4')
-@include('admin.valvulas.componets.form-5')
-@include('admin.valvulas.componets.form-6')
-@include('admin.valvulas.componets.form-7')
-@include('admin.valvulas.componets.form-8')
-@include('admin.valvulas.componets.form-9')
-@include('admin.valvulas.componets.form-10')
-@include('admin.valvulas.componets.form-11')
-@include('admin.valvulas.componets.form-12')
-@include('admin.valvulas.componets.form-13')
-@include('admin.valvulas.componets.form-14')
+<div class="mb-4">
+  @include('admin.valvulas.componets.tabla-estado-trabajo')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.cliente-solicitud')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-4')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-5')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-6')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-7')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-8')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-9')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-10')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-11')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-12')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-13')
+</div>
+<div class="mb-4">
+  @include('admin.valvulas.componets.form-14')
+</div>
 
 
 <div class="sticky bottom-0 flex justify-end gap-4">
