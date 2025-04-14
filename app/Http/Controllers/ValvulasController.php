@@ -106,13 +106,17 @@ class ValvulasController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $valvula = Valvula::findOrFail($id);
+        $valvula->delete();
+        return redirect()->route('valvulas')->with('success', 'Valvula eliminada correctamente');
     }
 
     public function returnParams($request){
         // ACÁ BAJO FALTAN AGRGAR VALORES (MARCAR TODO EL FORM Y LUEGO SACAR TODAS LAS VARIABLES) (algunos checkbos tiran "on" (cambiar por si o no))
-        $fentraFormateada = $request->fentra ? \Carbon\Carbon::createFromFormat('Y-m-d', $request->fentra)->format('d-m-Y') : '';
-        $fsalidaFormateada = $request->fentra ? \Carbon\Carbon::createFromFormat('Y-m-d', $request->fsalida)->format('d-m-Y') : '';
+        // $fentraFormateada = $request->fentra ? \Carbon\Carbon::createFromFormat('Y-m-d', $request->fentra)->format('d-m-Y') : '';
+        $fentraFormateada = $request->fentra ?? '';
+        // $fsalidaFormateada = $request->fentra ? \Carbon\Carbon::createFromFormat('Y-m-d', $request->fsalida)->format('d-m-Y') : '';
+        $fsalidaFormateada = $request->fentra ?? '';
         $params = [
             'tag' => $request->tag_item ?? '',
             'ident' => '',
