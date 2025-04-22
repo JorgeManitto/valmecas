@@ -5,6 +5,7 @@ use App\Http\Controllers\ArchivosController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmpresasValvulasController;
 use App\Http\Controllers\MarcasValvulasController;
+use App\Http\Controllers\PedidosController;
 use App\Http\Controllers\PurgadoresController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValvulasController;
@@ -68,6 +69,15 @@ Route::middleware(['auth'])->group(function () {
         'edit' => 'usuarios.edit',
         'update' => 'usuarios.update',
         'destroy' => 'usuarios.destroy'
+    ]);
+    Route::resource('admin/pedidos', PedidosController::class)->names([
+        'index' => 'pedidos',
+        'create' => 'pedidos.create',
+        'store' => 'pedidos.store',
+        'show' => 'pedidos.show',
+        'edit' => 'pedidos.edit',
+        'update' => 'pedidos.update',
+        'destroy' => 'pedidos.destroy'
     ]);
 
     Route::get('admin/archivos', [ArchivosController::class, 'index'])->name('archivos');

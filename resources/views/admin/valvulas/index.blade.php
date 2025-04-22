@@ -32,7 +32,7 @@
             @endforeach
           </select>
         </div>
-        <div>
+        {{-- <div>
           <label for="modelo_select" class="text-white">Seleccione Marca</label>
           <select name="modelo_select" onchange="document.getElementById('filterForm').submit();" id="" class="w-full md:w-auto rounded-lg text-white flex items-center cursor-pointer px-4 py-2 border-gray-200 dark:border-[#2B2B30] bg-white dark:bg-[#1F1F23]">
             <option value="">Mostrar todas</option>
@@ -40,7 +40,7 @@
             <option @selected($modelo_select == $modelo->nombre) value="{{$modelo->nombre}}">{{ $modelo->nombre }}</option>
             @endforeach
           </select>
-        </div>
+        </div> --}}
 
       </div>
     </div>
@@ -105,7 +105,7 @@
             @foreach ($valvulas as $valvula)
             <tr class="hover:bg-gray-50 dark:hover:bg-[#1F1F23]/50 transition-colors duration-150">
               <td class="px-4 py-3 text-yellow-900 dark:text-yellow-100">
-                <a href="{{ route('valvulas.show', ['id'=>$valvula->id]) }}">{{ $valvula->tag_item }}</a>
+                <a href="{{ route('valvulas.edit', ['id'=>$valvula->id]) }}">{{ $valvula->tag_item }}</a>
               </td>
               <td class="px-4 py-3">
                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 

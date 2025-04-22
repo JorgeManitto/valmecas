@@ -41,7 +41,7 @@
             <label class="text-sm font-medium">PRUEBA DE FUGA ACEPTABLE</label>
             <select class="w-full border border-gray-400 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-500" name="svprfugacep">
                 <option>Selecciona</option>
-                <option @selected($valvula->svprfugacep == 'Ok') value="Ok" selected="selected">Ok</option>
+                <option @selected($valvula->svprfugacep == 'Ok') value="Ok">Ok</option>
                 <option @selected($valvula->svprfugacep == 'No Ok') value="No Ok">No Ok</option>
             </select>
         </div>
@@ -51,7 +51,7 @@
             <label class="text-sm font-medium">PRUEBA DE TARADO ACEPTABLE</label>
             <select class="w-full sm:w-1/2 border border-gray-400 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-500" name="svprtardacep">
                 <option>Selecciona</option>
-                <option @selected($valvula->svprtardacep == 'Ok') value="Ok" selected="selected">Ok</option>
+                <option @selected($valvula->svprtardacep == 'Ok') value="Ok">Ok</option>
                 <option @selected($valvula->svprtardacep == 'No Ok') value="No Ok">No Ok</option>
             </select>
         </div>

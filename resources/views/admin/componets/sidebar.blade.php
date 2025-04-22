@@ -44,8 +44,8 @@
                   Pedidos
               </div>
               <div class="space-y-1">
-                <a href="{{ route('onworikingview') }}" class="flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#1F1F23]"
-                @if (request()->routeIs('archivos'))
+                <a href="{{ route('pedidos') }}" class="flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#1F1F23]"
+                @if (request()->routeIs('pedidos'))
                   style="background-color: #E5E7EB; color: #111827;"
                 @endif
                 >
@@ -80,7 +80,7 @@
                 </a>
 
               </div>
-              <div class="space-y-1">
+              {{-- <div class="space-y-1">
                 <a href="{{ route('marcas.valvulas') }}" class="flex items-center px-3 py-2 text-sm rounded-md transition-colors text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-[#1F1F23]"
                 @if (request()->routeIs('marcas.valvulas'))
                   style="background-color: #E5E7EB; color: #111827;"
@@ -89,7 +89,7 @@
                 Listado De Marcas
                 </a>
 
-              </div>
+              </div> --}}
             </div>
 
             <div>

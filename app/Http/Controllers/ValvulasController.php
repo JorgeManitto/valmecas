@@ -74,8 +74,26 @@ class ValvulasController extends Controller
         $valvula = Valvula::findOrFail($id);
         $empresas   = EmpresasValvula::where('estado', 'activo')->get();
         $modelos    = MarcaValvula::where('estado', 'activo')->get();
+
+        $imagenes = [];
+        $tag = $valvula->tag_item;
+
+        // Definimos las URLs
+        $urls = [
+            "https://www.valmecas.es/cert/{$tag}.jpeg",
+            "https://www.valmecas.es/cert/A{$tag}.jpeg",
+            "https://www.valmecas.es/cert/B{$tag}.jpeg",
+        ];
+
+        // Revisamos si existe cada imagen
+        foreach ($urls as $url) {
+            $headers = @get_headers($url);
+            if ($headers && strpos($headers[0], '200') !== false) {
+                $imagenes[] = $url;
+            }
+        }
         // dd($valvula);
-        return view('admin.valvulas.show', compact('valvula','empresas','modelos','method'));
+        return view('admin.valvulas.show', compact('valvula','empresas','modelos','method', 'imagenes'));
     }
 
     /**
@@ -87,7 +105,25 @@ class ValvulasController extends Controller
         $valvula = Valvula::findOrFail($id);
         $empresas   = EmpresasValvula::where('estado', 'activo')->get();
         $modelos    = MarcaValvula::where('estado', 'activo')->get();
-        return view('admin.valvulas.show', compact('valvula','method','empresas','modelos'));
+
+        $imagenes = [];
+        $tag = $valvula->tag_item;
+
+        // Definimos las URLs
+        $urls = [
+            "https://www.valmecas.es/cert/{$tag}.jpeg",
+            "https://www.valmecas.es/cert/A{$tag}.jpeg",
+            "https://www.valmecas.es/cert/B{$tag}.jpeg",
+        ];
+
+        // Revisamos si existe cada imagen
+        foreach ($urls as $url) {
+            $headers = @get_headers($url);
+            if ($headers && strpos($headers[0], '200') !== false) {
+                $imagenes[] = $url;
+            }
+        }
+        return view('admin.valvulas.show', compact('valvula','method','empresas','modelos','imagenes'));
     }
 
     /**
@@ -96,6 +132,7 @@ class ValvulasController extends Controller
     public function update(Request $request)
     {
         $valvula = Valvula::findOrFail($request->id);
+        // dd($request);
         $params = $this->returnParams($request);
         $valvula->update($params);
         return redirect()->route('valvulas')->with('success', 'Valvula actualizada correctamente');
@@ -342,39 +379,53 @@ class ValvulasController extends Controller
             'par_apriete_paso1' => $request->par_apriete_paso1 ?? '',
             'par_apriete_paso2' => $request->par_apriete_paso2 ?? '',
             'par_apriete_paso3' => $request->par_apriete_paso3 ?? '',
-
-            "fmano2" => $request->fmano2 ?? '',
-            'file_imagen1' => $request->file_imagen1 ?? '',
             'file_oca' => $request->file_oca ?? '',
             'motivo_rep' => $request->motivo_rep ?? '',
-            'svcriteracep13' => $request->svcriteracep13 ?? '',
-            'svcriteracep097' => $request->svcriteracep097 ?? '',
-            'svprfuga090' => $request->svprfuga090 ?? '',
-            'adjunto' => $request->adjunto ?? '',
-            'codigoqr' => $request->codigoqr ?? '',
-            'pdf_export' => $request->pdf_export ?? '',
-            'ubicacion_longitud' => $request->ubicacion_longitud ?? '',
-            'ubicacion_latitud' => $request->ubicacion_latitud ?? '',
+            'valvseg_existevalv_bloqueo' => $request->valvseg_existevalv_bloqueo ?? '',
+            'valvseg_fugavalv_bloqueo' => $request->valvseg_fugavalv_bloqueo ?? '',
+            'equipo_protege' => $request->equipo_protege ?? '',
+            'descarga_atmosfera' => $request->descarga_atmosfera ?? '',
+            'oca' => $request->oca ?? '',
+            'nomb_oca' => $request->nomb_oca ?? '',
+
+            "fmano2" => $request->fmano2 ?? '', //fmano2 no tiene ningun valor en la base
+            'svcriteracep13' => $request->svcriteracep13 ?? '',// en la web actual valmecas, no hay inputs con estos datos. En la base hay datos pero parecen ser muy viejos.
+            'svcriteracep097' => $request->svcriteracep097 ?? '',// en la web actual valmecas, no hay inputs con estos datos. En la base hay datos pero parecen ser muy viejos.
+            'svprfuga090' => $request->svprfuga090 ?? '',// en la web actual valmecas, no hay inputs con estos datos. En la base hay datos pero parecen ser muy viejos.
+            'codigoqr' => $request->codigoqr ?? '', // en la web actual valmecas, no hay inputs con estos datos. En la base hay datos pero parecen ser muy viejos.
+            'pdf_export' => $request->pdf_export ?? '',// en la web actual valmecas, no hay inputs con estos datos. En la base hay datos pero parecen ser muy viejos.
+            'ubicacion_longitud' => $request->ubicacion_longitud ?? '', //esto parece ser muy viejo
+            'ubicacion_latitud' => $request->ubicacion_latitud ?? '', //esto parece ser muy viejo
             'ubicacion_link' => $request->ubicacion_link ?? '',
             'presion_prepopping' => $request->presion_prepopping ?? '',
             'identif_correcta' => $request->identif_correcta ?? '',
             'valv_nueva_marcasdesper' => $request->valv_nueva_marcasdesper ?? '',
-            'valvseg_existevalv_bloqueo' => $request->valvseg_existevalv_bloqueo ?? '',
-            'valvseg_fugavalv_bloqueo' => $request->valvseg_fugavalv_bloqueo ?? '',
             'grafica_presion' => $request->grafica_presion ?? '',
-            'equipo_protege' => $request->equipo_protege ?? '',
-            'descarga_atmosfera' => $request->descarga_atmosfera ?? '',
             'imagen_antesreparacion' => $request->imagen_antesreparacion ?? '',
-            'oca' => $request->oca ?? '',
-            'nomb_oca' => $request->nomb_oca ?? '',
+            
             'pruebaimg' => $request->pruebaimg ?? '',
             'grafica_presion1' => $request->grafica_presion1 ?? '',
             'grafica_presion2' => $request->grafica_presion2 ?? '',
-            'adjunto1' => $request->adjunto1 ?? '',
-            'adjunto2' => $request->adjunto2 ?? '',
             'estado_incidencia_grave' => $request->estado_incidencia_grave ?? '',
             'modified' => now(),
         ];
+
+        if ($request->file_imagen1) {
+            $params['file_imagen1'] = $request->file_imagen1->store('valvulas', 'public');
+        }
+        if ($request->file_oca) {
+            $params['file_oca'] = $request->file_oca->store('valvulas', 'public');
+        }
+        if ($request->adjunto) {
+            $params['adjunto'] = $request->adjunto->store('valvulas', 'public');
+        }
+        if ($request->adjunto1) {
+            $params['adjunto1'] = $request->adjunto1->store('valvulas', 'public');
+        }
+        if ($request->adjunto2) {
+            $params['adjunto2'] = $request->adjunto2->store('valvulas', 'public');
+        }
+
         return $params;                
     }
 }

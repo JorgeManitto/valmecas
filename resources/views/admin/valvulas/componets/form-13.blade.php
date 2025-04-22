@@ -1,6 +1,6 @@
 
 <!-- Tabla de datos -->
-<div class="w-full max-w-4xl mx-auto  rounded-lg shadow-lg p-4 bg-white">
+<div class="w-full max-w-4xl mx-auto  rounded-lg shadow-lg p-4 bg-white ">
   <!-- Imagen superior -->
   <div class="rounded-lg my-8 flex items-center justify-center">
     <img src="{{ asset('/medidasSV.jpg') }}" alt="Diagramas técnicos" class="max-w-full h-auto">
@@ -43,3 +43,14 @@
       <input type="text" class="  border border-gray-600 rounded px-2 py-1 focus:outline-none focus:ring focus:ring-blue-500" name="svk" value="{{ $valvula->svk }}">
   </div>
 </div>
+
+<!-- Tabla de datos -->
+@if ($method == 'valvulas.update')
+  <div class="w-full max-w-4xl mx-auto rounded-lg shadow-lg p-4 bg-white mt-4">
+    @foreach($imagenes as $img)
+      <div class="rounded-lg my-8 flex items-center justify-center">
+        <img src="{{ $img }}" alt="Diagramas técnicos" class="max-w-full h-auto">
+      </div>
+    @endforeach
+  </div>
+@endif

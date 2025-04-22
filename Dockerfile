@@ -40,6 +40,9 @@ RUN npm run build
 # Establece permisos para el storage de Laravel
 RUN chown -R www-data:www-data /var/www/html/storage
 
+# Crea el enlace simbólico para el almacenamiento
+RUN php artisan storage:link
+
 # Cambia el directorio raíz de Apache a /var/www/html/public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf

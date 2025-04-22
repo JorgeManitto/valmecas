@@ -18,10 +18,17 @@
       <div class="md:text-center font-bold">F-023<br>FICHA TÉCNICA DE CONTROL Y DIAGNOSIS DE VÁLVULAS</div>
       <div class="md:text-right font-bold">
         @php
-            $imagen = str_replace('/homepages/32/d467861861/htdocs/www2/','https://valmecas.es/',$valvula->file_imagen1) ;
+            if (str_contains($valvula->file_imagen1, '/homepages')) {
+                $imagen = str_replace('/homepages/32/d467861861/htdocs/www2/','https://valmecas.es/',$valvula->file_imagen1) ;
+            }else{
+                $imagen = $valvula->file_imagen1;
+                $imagen = asset('storage/'.$imagen);
+            }
         @endphp
         @if ($imagen)
+          @if ($method == 'valvulas.update')
             <img src="{{$imagen}}" alt="Imagen" class="w-32 h-32 object-cover rounded-lg mx-auto">
+          @endif
         @endif
       </div>
   </div>
@@ -54,8 +61,8 @@
 
   <div class="grid grid-cols-3 gap-4 mt-4">
       <label class="block">Motivo Intervención:
-        <select class="w-full bg-gray-200 p-2 rounded">
-          <option value="" @selected('' == $valvula->motivo_rep)>Selecciona</option>
+        <select class="w-full bg-gray-200 p-2 rounded" name="motivo_rep">
+          <option value="">Selecciona</option>
           <option value="Nueva" @selected('Nueva' == $valvula->motivo_rep)>Nueva</option>
           <option value="Correctivo" @selected('Correctivo' == $valvula->motivo_rep)>Correctivo</option>
           <option value="Preventivo" @selected('Preventivo' == $valvula->motivo_rep)>Preventivo</option>
@@ -386,6 +393,59 @@
       </label>
   </div>
 </div>
+  @if ($method == 'valvulas.update')
+    <div class="max-w-4xl mx-auto p-6 rounded-lg shadow-lg bg-white mb-4">
+      <div class="grid grid-cols-2 gap-4 mt-4">
+        <div>
+          <label class="block">¿EXISTE VÁLVULA DE BLOQUEO?
+            <select class="w-full bg-gray-200 p-2 rounded" name="valvseg_existevalv_bloqueo">
+              <option value="">Selecciona</option>
+              <option value="Si" @selected('Si' == $valvula->valvseg_existevalv_bloqueo)>Si</option>
+              <option value="No" @selected('No' == $valvula->valvseg_existevalv_bloqueo)>No</option>
+              <option value="Desconocido" @selected('Desconocido' == $valvula->valvseg_existevalv_bloqueo)>Desconocido</option>
+            </select>
+          </label>
+      
+          <label class="block">EQUIPO PROTEGE: 
+            <input type="text" class="w-full bg-gray-200 p-2 rounded" name="equipo_protege" value="{{$valvula->equipo_protege}}">
+          </label>
+
+          <div>
+            <div class="p-2 font-semibold">DESCARGA ATMOSFÉRICA: </div>
+            <div class="md:p-2">
+              <label class="md:mr-4"><input type="radio" name="descarga_atmosfera" class="mr-1" @checked($valvula->descarga_atmosfera == 'Si') value="Si"> Sí</label>
+              <label><input type="radio" name="descarga_atmosfera" class="mr-1" @checked($valvula->descarga_atmosfera == 'No')  value="No"> No</label>
+            </div>
+          </div>
+
+          <div>
+            <div class="p-2 font-semibold">CERTIFICADO OCA:</div>
+            <div class="md:p-2">
+              <label class="md:mr-4"><input type="radio" name="oca" class="mr-1" @checked($valvula->oca == 'Si') value="Si"> Sí</label>
+              <label><input type="radio" name="oca" class="mr-1" @checked($valvula->oca == 'No')  value="No"> No</label>
+            </div>
+          </div>
+          <div>
+
+            <div class="md:p-2">
+              <label class="md:mr-4"><input type="radio" name="nomb_oca" class="mr-1" @checked($valvula->nomb_oca == 'SGS IR S.A.') value="SGS IR S.A.">SGS IR S.A.</label> <br>
+              <label><input type="radio" name="nomb_oca" class="mr-1" @checked($valvula->nomb_oca == 'OCA GROUP')  value="OCA GROUP">OCA GROUP</label> <br>
+              <label><input type="radio" name="nomb_oca" class="mr-1" @checked($valvula->nomb_oca == 'EUROCONTROL')  value="EUROCONTROL">EUROCONTROL</label> <br>
+              <label><input type="radio" name="nomb_oca" class="mr-1" @checked($valvula->nomb_oca == 'APPLUS SERVICES SA')  value="APPLUS SERVICES SA">APPLUS SERVICES SA</label>
+            </div>
+          </div>
+
+        </div>
+        <div>
+          <div class="p-2 font-semibold">¿LA VÁLVULA DE BLOQUEO FUGA?    ** IMPORTANTE CUMPLIMENTAR**:</div>
+          <div class="md:p-2">
+            <label class="md:mr-4"><input type="radio" name="valvseg_fugavalv_bloqueo" class="mr-1" @checked($valvula->valvseg_fugavalv_bloqueo == 'Si') value="Si"> Sí</label>
+            <label><input type="radio" name="valvseg_fugavalv_bloqueo" class="mr-1" @checked($valvula->valvseg_fugavalv_bloqueo == 'No')  value="No"> No</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endif
 <div class="mb-4">
   @include('admin.valvulas.componets.tabla-estado-trabajo')
 </div>
