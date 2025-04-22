@@ -408,6 +408,10 @@ class ValvulasController extends Controller
             'grafica_presion2' => $request->grafica_presion2 ?? '',
             'estado_incidencia_grave' => $request->estado_incidencia_grave ?? '',
             'modified' => now(),
+            'file_imagen1' => $request->file_imagen1 ?? '',
+            'adjunto' => $request->adjunto ?? '',
+            'adjunto1' => $request->adjunto1 ?? '',
+            'adjunto2' => $request->adjunto2 ?? '',
         ];
 
         if ($request->file_imagen1) {
