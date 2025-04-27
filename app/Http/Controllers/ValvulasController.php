@@ -6,6 +6,8 @@ use App\Models\EmpresasValvula;
 use App\Models\MarcaValvula;
 use App\Models\Valvula;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class ValvulasController extends Controller
 {
@@ -131,6 +133,8 @@ class ValvulasController extends Controller
      */
     public function update(Request $request)
     {
+        $res = $this->enviarCorreo('jorgemanitto@hotmail.com', 'Asunto del correo prueba', 'Este es el contenido del correo.');
+        // dd($res);
         $valvula = Valvula::findOrFail($request->id);
         // dd($request);
         $params = $this->returnParams($request);
@@ -146,6 +150,21 @@ class ValvulasController extends Controller
         $valvula = Valvula::findOrFail($id);
         $valvula->delete();
         return redirect()->route('valvulas')->with('success', 'Valvula eliminada correctamente');
+    }
+
+    function enviarCorreo($destinatario, $asunto, $mensaje)
+    {
+        try {
+            Mail::raw($mensaje, function ($mail) use ($destinatario, $asunto) {
+                $mail->to($destinatario)
+                    ->subject($asunto);
+            });
+
+            return 'Correo enviado correctamente';
+        } catch (\Exception $e) {
+            Log::error('Error al enviar el correo: ' . $e->getMessage());
+            return 'Error al enviar el correo';
+        }
     }
 
     public function returnParams($request){

@@ -72,7 +72,7 @@
             <tr class="hover:bg-gray-50 dark:hover:bg-[#1F1F23]/50 transition-colors duration-150">
               <td class="px-4 py-3 {{ $pedido->prioridad == '3' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' : '' }} {{ $pedido->prioridad == '1' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : ''}} {{ $pedido->prioridad == '2' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : ''}}">{{ $pedido->prioridad }}</td>
               <td class="px-4 py-3 text-yellow-900 dark:text-yellow-100">
-                <a href="{{ route('pedidos.show', ['pedido'=>$pedido->id]) }}">{{ $pedido->numpedido }}</a>
+                <a href="{{ route('pedidos.edit', ['pedido'=>$pedido->id]) }}">{{ $pedido->numpedido }}</a>
               </td>
               <td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ $pedido->fecha_salida_prevista }}</td>
               <td class="px-4 py-3 text-gray-600 dark:text-gray-400">{{ $pedido->trabajad_nuevo }}</td>
@@ -87,7 +87,7 @@
                 <!-- Dropdown -->
                 <div x-show="open" @click.away="open = false"
                   class="absolute right-0 mt-2 w-36 bg-white dark:bg-[#1F1F23] border border-gray-200 dark:border-[#2B2B30] rounded-lg shadow-md z-10" style="top: -26px;">
-                  <a href="{{ route('onworikingview', $pedido->id) }}" 
+                  <a href="{{ route('pedidos.edit', $pedido->id) }}" 
                      class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-[#2B2B30]">
                     Editar
                   </a>

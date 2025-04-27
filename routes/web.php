@@ -79,6 +79,8 @@ Route::middleware(['auth'])->group(function () {
         'update' => 'pedidos.update',
         'destroy' => 'pedidos.destroy'
     ]);
+    Route::post('admin/pedidos/agregaroperario', [PedidosController::class, 'agregarOperario'])->name('pedidos.agregarOperario');
+    Route::post('admin/pedidos/eliminarOperario', [PedidosController::class, 'eliminarOperario'])->name('pedidos.eliminarOperario');
 
     Route::get('admin/archivos', [ArchivosController::class, 'index'])->name('archivos');
 
