@@ -34,7 +34,7 @@ class PedidosController extends Controller
         $method = 'pedidos.store';
         $url = route('pedidos.store');
         $title = 'Crear pedido';
-        $operarios = PedidoOperario::all();
+        $operarios = PedidoOperario::pluck('name');
         return view('admin.pedidos.show', compact('pedido', 'method', 'url', 'title', 'operarios'));
     }
 
