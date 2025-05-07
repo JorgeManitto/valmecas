@@ -3,7 +3,7 @@
 @php
     
 @endphp
-<form action="{{ route($method) }}" method="post" enctype="multipart/form-data" >
+<form action="{{ route($method) }}" method="post" enctype="multipart/form-data"  class="contenido">
   @csrf
   @if ($method == 'valvulas.update')
     @method('PUT')

@@ -12,6 +12,13 @@
 @else    @endif
 
   <style>
+    @media print {
+  .contenido {
+    height: auto !important;
+    overflow: visible !important;
+  }
+}
+
     body {
       font-family: 'Inter', sans-serif;
     }
@@ -124,7 +131,7 @@
       @include('admin.componets.nav')
 
       <!-- Main Content Area -->
-      <main class="flex-1 overflow-auto p-6 bg-white dark:bg-[#0F0F12]">
+      <main class="flex-1 overflow-auto p-6 bg-white dark:bg-[#0F0F12]" id="main-content">
         <div class="space-y-4">
           <!-- First Row -->
           @yield('content')
@@ -136,6 +143,33 @@
   </div>
   <script src="/select.js"></script>
   <script>
+    document.addEventListener('window:print', function () {
+      // Hide the sidebar and overlay when printing
+      console.log('Printing...');
+      
+      document.getElementById('sidebar').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('main-content').style.overflow = 'visible';
+      document.getElementById('main-content').classList.remove('overflow-auto');
+    });
+
+    window.addEventListener('beforeprint', function () {
+      console.log('Preparing for print...');
+      document.getElementById('sidebar').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('main-content').style.overflow = 'visible';
+      document.getElementById('main-content').classList.remove('overflow-auto');
+    });
+    window.addEventListener('afterprint', function () {
+  console.log('Print process finished or canceled.');
+  
+  // Restore the sidebar and overlay to their original state
+  document.getElementById('sidebar').style.display = '';
+  document.getElementById('overlay').style.display = '';
+  document.getElementById('main-content').style.overflow = 'auto';
+  document.getElementById('main-content').classList.add('overflow-auto');
+});
+    
     // Initialize Lucide icons
     lucide.createIcons();
     
