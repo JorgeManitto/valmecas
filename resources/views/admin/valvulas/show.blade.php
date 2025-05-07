@@ -393,7 +393,7 @@
       </label>
   </div>
 </div>
-  @if ($method == 'valvulas.update')
+  {{-- @if ($method == 'valvulas.update') --}}
     <div class="max-w-4xl mx-auto p-6 rounded-lg shadow-lg bg-white mb-4">
       <div class="grid grid-cols-2 gap-4 mt-4">
         <div>
@@ -445,7 +445,7 @@
         </div>
       </div>
     </div>
-  @endif
+  {{-- @endif --}}
 <div class="mb-4">
   @include('admin.valvulas.componets.tabla-estado-trabajo')
 </div>

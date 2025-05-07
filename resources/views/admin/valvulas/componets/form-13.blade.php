@@ -47,9 +47,9 @@
 <!-- Tabla de datos -->
 @if ($method == 'valvulas.update')
   <div class="w-full max-w-4xl mx-auto rounded-lg shadow-lg p-4 bg-white mt-4">
-    @foreach($imagenes as $img)
+    @foreach($imagenes as $i => $img)
       <div class="rounded-lg my-8 flex items-center justify-center">
-        <img src="{{ $img }}" alt="Diagramas técnicos" class="max-w-full h-auto">
+        <img src="{{ $img }}" alt="Diagramas técnicos" class="max-w-full h-auto" id="img_{{ $i }}">
       </div>
     @endforeach
   </div>

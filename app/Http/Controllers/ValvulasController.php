@@ -8,7 +8,8 @@ use App\Models\Valvula;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 class ValvulasController extends Controller
 {
     /**
@@ -118,21 +119,21 @@ class ValvulasController extends Controller
             "https://www.valmecas.es/cert/B{$tag}.jpeg",
         ];
         
-       
-        echo "<pre>";
-        print_r($urls);
-        echo "</pre>";
-        // Revisamos si existe cada imagen
+        $client = new Client();
         foreach ($urls as $url) {
-            $headers = @get_headers($url);
-            if ($headers && strpos($headers[0], '200') !== false) {
-                $imagenes[] = $url;
+            try {
+                $response = $client->head($url);
+                if ($response->getStatusCode() === 200) {
+                    $imagenes[] = $url;
+                }
+            } catch (RequestException $e) {
+                // Manejar errores, como 429 Too Many Requests
+                if ($e->getResponse() && $e->getResponse()->getStatusCode() === 429) {
+                    sleep(1); // Esperar antes de reintentar
+                }
             }
-            var_dump($headers);
-            echo "<br>";
-            echo "<br>";
         }
-        dd( );
+        // dd( $imagenes);
         return view('admin.valvulas.show', compact('valvula','method','empresas','modelos','imagenes'));
     }
 
