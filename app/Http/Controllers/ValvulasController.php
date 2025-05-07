@@ -117,14 +117,22 @@ class ValvulasController extends Controller
             "https://www.valmecas.es/cert/A{$tag}.jpeg",
             "https://www.valmecas.es/cert/B{$tag}.jpeg",
         ];
-
+        
+       
+        echo "<pre>";
+        print_r($urls);
+        echo "</pre>";
         // Revisamos si existe cada imagen
         foreach ($urls as $url) {
             $headers = @get_headers($url);
             if ($headers && strpos($headers[0], '200') !== false) {
                 $imagenes[] = $url;
             }
+            var_dump($headers);
+            echo "<br>";
+            echo "<br>";
         }
+        dd( );
         return view('admin.valvulas.show', compact('valvula','method','empresas','modelos','imagenes'));
     }
 
