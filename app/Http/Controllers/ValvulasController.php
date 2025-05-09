@@ -142,12 +142,14 @@ class ValvulasController extends Controller
      */
     public function update(Request $request)
     {
-        $res = $this->enviarCorreo('jorgemanitto@hotmail.com', 'Asunto del correo prueba', 'Este es el contenido del correo.');
-        // dd($res);
         $valvula = Valvula::findOrFail($request->id);
         // dd($request);
         $params = $this->returnParams($request);
         $valvula->update($params);
+        if ($request->finaliz == 'Si') {
+            $res = $this->enviarCorreo('basevalvulas@valmecas.com', $valvula->cliente.' '.$valvula->tag_item, $this->contenidoDeCorreo($valvula));
+        }
+        
         return redirect()->route('valvulas')->with('success', 'Valvula actualizada correctamente');
     }
 
@@ -158,22 +160,122 @@ class ValvulasController extends Controller
     {
         $valvula = Valvula::findOrFail($id);
         $valvula->delete();
-        return redirect()->route('valvulas')->with('success', 'Valvula eliminada correctamente');
+        return redirect()->route('valvulas')->with('success');
     }
 
     function enviarCorreo($destinatario, $asunto, $mensaje)
     {
         try {
-            Mail::raw($mensaje, function ($mail) use ($destinatario, $asunto) {
+            Mail::send([], [], function ($mail) use ($destinatario, $asunto, $mensaje) {
                 $mail->to($destinatario)
-                    ->subject($asunto);
+                    ->subject($asunto)
+                    ->html($mensaje); // Usar el método html para contenido HTML
             });
 
             return 'Correo enviado correctamente';
         } catch (\Exception $e) {
             Log::error('Error al enviar el correo: ' . $e->getMessage());
-            return 'Error al enviar el correo';
+            return 'Error al enviar el correo' . $e->getMessage();
         }
+    }
+
+    function contenidoDeCorreo($valvula)  {
+        $route = route('valvulas.edit', ['id' => $valvula->id]);
+        if (str_contains($valvula->file_imagen1, '/homepages')) {
+                $imagen = str_replace('/homepages/32/d467861861/htdocs/www2/','https://valmecas.es/',$valvula->file_imagen1) ;
+        }else{
+            $imagen = $valvula->file_imagen1;
+            $imagen = asset('storage/'.$imagen);
+        }
+        $content = "
+       <!DOCTYPE html>
+        <html lang='es'>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>$valvula->cliente - $valvula->tag_item</title>
+        </head>
+        <body style='background-color: #f3f4f6; padding: 1.5rem;'>
+            <div style='max-width: 56rem; margin-left: auto; margin-right: auto; background-color: #ffffff; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); overflow: hidden;'>
+                <!-- Encabezado -->
+                <div style='background-color: #1e40af; color: #ffffff; padding: 1rem;'>
+                    <h1 style='font-size: 1.5rem; font-weight: 700;'>VALVULAS VALMECAS</h1>
+                    <img src='$imagen' alt='Logo' style='width: 128px; height: 128px;object-fit: cover;border-radius: 0.5rem;'>
+                    <h1 style='font-size: 1.25rem; font-weight: 700;'>CLIENTE: $valvula->cliente</h1>
+                    <p style='font-weight: 600;'> $valvula->tag_item</p>
+                </div>
+                
+                <!-- Tabla principal -->
+                <div style='padding: 1rem;'>
+                    <table style='width: 100%; border-collapse: collapse;'>
+                        <tbody>
+                            <!-- Primera fila -->
+                            <tr style='border-bottom: 1px solid #e5e7eb;'>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6; width: 25%;'>OFERTA:</td>
+                                <td style='padding: 0.5rem 1rem; width: 25%;'>$valvula->oferta</td>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6; width: 25%;'>W.O.:</td>
+                                <td style='padding: 0.5rem 1rem; width: 25%;'>$valvula->wo</td>
+                            </tr>
+                            <!-- Segunda fila -->
+                            <tr style='border-bottom: 1px solid #e5e7eb;'>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>FINALIZADA:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->finaliz</td>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>REPARA:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->recepciona</td>
+                            </tr>
+                            <!-- Tercera fila -->
+                            <tr style='border-bottom: 1px solid #e5e7eb;'>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>FECHA ENTRADA:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->fentra</td>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>FECHA SALIDA:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->fsalida</td>
+                            </tr>
+                            <!-- Cuarta fila -->
+                            <tr style='border-bottom: 1px solid #e5e7eb;'>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>SECTOR PROCEDENCIA:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->sector</td>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>MODELO:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->modelo</td>
+                            </tr>
+                            <!-- Quinta fila -->
+                            <tr style='border-bottom: 1px solid #e5e7eb;'>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>TIPO VALVULA:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->tipo</td>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>DIAMETRO:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->diametro</td>
+                            </tr>
+                            <!-- Sexta fila -->
+                            <tr style='border-bottom: 1px solid #e5e7eb;'>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>MOTIVO REPARACION:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->motivo_rep</td>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'></td>
+                                <td style='padding: 0.5rem 1rem;'></td>
+                            </tr>
+                            <!-- Séptima fila -->
+                            <tr style='border-bottom: 1px solid #e5e7eb;'>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>RECOMENDACIONES:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->recomendaciones</td>
+                                <td style='padding: 0.5rem 1rem; font-weight: 600; background-color: #f3f4f6;'>INCIDENCIA GRAVE:</td>
+                                <td style='padding: 0.5rem 1rem;'>$valvula->incidencia_grave</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Separador -->
+                    <div style='border-top: 1px solid #d1d5db; margin-top: 1rem; margin-bottom: 1rem;'></div>
+                    
+                    <!-- Enlace -->
+                    <div style='text-align: center;'>
+                        <a href='$route' style='color: #2563eb; text-decoration: underline;'>
+                            ACCESO A FICHA: $route
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </body>
+        </html>
+";
+        return $content;
     }
 
     public function returnParams($request){
