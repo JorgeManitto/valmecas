@@ -637,7 +637,7 @@ class ValvulasController extends Controller
             'created_by' => auth()->user()->name,
             'modified_user_id' => '1',
             'modified_by' => 'jorge manitto',
-            "oferta" => $request->oferta ?? '',
+            "oferta" => '',
             "cliente" => $request->cliente ?? '',
             "origen" => $request->origen ?? '',
             "finaliz" => $request->finaliz ?? '',
