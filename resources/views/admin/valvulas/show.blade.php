@@ -3,6 +3,23 @@
 @php
     
 @endphp
+  @if ($method == 'valvulas.update')
+    <div class="max-w-4xl mx-auto p-6 rounded-lg shadow-lg bg-white mb-4 ">
+      <div class="md:text-center font-bold mb-2">Listado de intervenciones</div>
+      <div class="flex gap-4 flex-wrap">
+
+        @if ($valvulaPadre || $valvulaHijos)
+          <a href="{{ route('valvulas.edit', ['id'=>$valvulaPadre ?$valvulaPadre->id : $valvula->id]) }}" class=" py-2 px-4 rounded-lg {{$valvulaPadre->id == $valvula->id ? 'bg-white text-black border-black border' : 'bg-blue-600 text-white'}}">{{ $valvulaPadre ? $valvulaPadre->tag_item : $valvula->tag_item}}</a>     
+        @endif
+       
+        @foreach ($valvulaHijos as $valvulaHijo)
+          <a href="{{ route('valvulas.edit', ['id'=>$valvulaHijo->id]) }}" class="{{$valvulaHijo->id == $valvula->id ? 'bg-white text-black border-black border' : 'bg-blue-600 text-white'}} py-2 px-4 rounded-lg ">{{ $valvulaHijo->tag_item}}</a>
+        @endforeach
+  
+        <a href="{{ route('valvulas.agregarPestañaDeIntervencion', ['id'=>$valvula->id]) }}" class="bg-green-700 text-white rounded-lg px-4 py-2  ">Agregar Pestaña de intevención</a>
+      </div>
+    </div>
+  @endif
 <form action="{{ route($method) }}" method="post" enctype="multipart/form-data"  class="contenido">
   @csrf
   @if ($method == 'valvulas.update')

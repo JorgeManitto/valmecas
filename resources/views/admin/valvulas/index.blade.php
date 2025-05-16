@@ -24,8 +24,8 @@
     <div class="mb-4">
       <div class="md:flex items-center gap-2">
         <div>
-          <label for="empresa_select" class="text-white">Seleccione cliente</label>
-          <select name="empresa_select" onchange="document.getElementById('filterForm').submit();" id="" class="w-full md:w-auto rounded-lg text-white flex items-center cursor-pointer px-4 py-2 border-gray-200 dark:border-[#2B2B30] bg-white dark:bg-[#1F1F23]">
+          <label for="empresa_select" class="text-black dark:text-white">Seleccione cliente</label>
+          <select name="empresa_select" onchange="document.getElementById('filterForm').submit();" id="" class="w-full md:w-auto rounded-lg text-black dark:text-white flex items-center cursor-pointer px-4 py-2 border-gray-700 dark:border-[#2B2B30] bg-gray-200 dark:bg-[#1F1F23]">
             <option value="">Mostrar todos</option>
             @foreach ($empresas as $empresa)
             <option @selected($empresa_select == $empresa->nombre) value="{{$empresa->nombre}}">{{ $empresa->nombre }}</option>
@@ -50,27 +50,27 @@
         <div class="relative w-full sm:w-64 flex items-center gap-0" >
           <div>
             <i data-lucide="search" class="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400"></i>
-            <input type="search" value="{{ $search }}" name="search" placeholder="SV-XXXX-ZZZ" class="pl-9 bg-gray-500 dark:bg-[#1F1F23] border-gray-200 dark:border-[#2B2B30] h-9 text-sm text-gray-400">
+            <input type="search" value="{{ $search }}" name="search" placeholder="SV-XXXX-ZZZ" class="pl-9 bg-gray-200 dark:bg-[#1F1F23] border-gray-200 dark:border-[#2B2B30] h-9 text-sm text-gray-400">
           </div>
           <button type="submit" class="rounded-lg bg-red-600 text-white cursor-pointer" style="padding: 0.4em;border-radius: 0 10px 10px 0;">Buscar</button>
         </div>
       </div>
       <div class="md:flex items-center gap-2 relative"  x-data="{ openFilters: false }">
-        <button @click="openFilters = !openFilters" type="button" class="rounded-lg text-white flex items-center cursor-pointer px-4 w-full mb-3 py-2 border-gray-200 dark:border-[#2B2B30] bg-white dark:bg-[#1F1F23]">
+        <button @click="openFilters = !openFilters" type="button" class="rounded-lg text-black dark:text-white flex items-center cursor-pointer px-4 w-full mb-3 py-2 border-gray-200 dark:border-[#2B2B30] bg-gray-200 dark:bg-[#1F1F23]">
           <i data-lucide="funnel" class="h-4 w-4 mr-3 flex-shrink-0"></i> Filtros
         </button>
         <div class="absolute left-0 mt-2 p-6 bg-white dark:bg-[#1F1F23] border border-gray-200 dark:border-[#2B2B30] rounded-lg shadow-md z-10" style="top: 28px;" 
         x-show="openFilters" @click.away="openFilters = false">
           <div class="mb-3">
-            <label for="finalizada" class="text-white">Finalizada:</label>
-            <select name="finalizada" id="" onchange="document.getElementById('filterForm').submit();" class="w-full md:w-auto rounded-lg text-black flex items-center cursor-pointer py-2 border-gray-200 bg-white">
+            <label for="finalizada" class="text-black dark:text-white">Finalizada:</label>
+            <select name="finalizada" id="" onchange="document.getElementById('filterForm').submit();" class="w-full md:w-auto rounded-lg text-black  flex items-center cursor-pointer py-2 border-gray-200 bg-gray-200 dark:bg-[#1F1F23">
               <option value="">Mostrar todas</option>
               <option @selected($finalizada == 'Si') value="Si">Si</option>
               <option @selected($finalizada == 'No') value="No">No</option>
             </select>
           </div>
         </div>
-        <button class="rounded-lg text-white flex items-center cursor-pointer px-4 w-full mb-3 py-2 border-gray-200 dark:border-[#2B2B30] bg-white dark:bg-[#1F1F23]">
+        <button class="rounded-lg text-black dark:text-white flex items-center cursor-pointer px-4 w-full mb-3 py-2 border-gray-200 dark:border-[#2B2B30] bg-gray-200 dark:bg-[#1F1F23]">
           <i data-lucide="download" class="h-4 w-4 mr-2"></i> Exportar
         </button>
 

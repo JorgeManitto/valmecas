@@ -76,7 +76,7 @@
       </div>
     </div>
     <div class="relative hidden bg-black lg:block">
-      <img src="https://grupohidraulica.com/wp-content/uploads/2024/02/valvula-cierre-estacion-bombeo-agua-es-tuberia-tanques-agua-sala-industrial-suministro-agua-alta-pres-min-1024x683.jpg" alt="Image" class="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale" lazyload="lazy" />
+      <img src="https://grupohidraulica.com/wp-content/uploads/2024/02/valvula-cierre-estacion-bombeo-agua-es-tuberia-tanques-agua-sala-industrial-suministro-agua-alta-pres-min-1024x683.jpg" alt="Image" class="absolute inset-0 h-full w-full object-cover brightness-[0.2] grayscale" lazyload="lazy" />
     </div>
   </div>
 

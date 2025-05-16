@@ -51,13 +51,11 @@
     /* Custom styles for components */
     .sidebar {
       width: 16rem;
-      background-color: #fff;
-      border-right: 1px solid #e5e7eb;
     }
     
     .dark .sidebar {
-      background-color: #0F0F12;
-      border-right-color: #1F1F23;
+      /* background-color: #0F0F12;
+      border-right-color: #1F1F23; */
     }
     
     .main-content {
@@ -72,20 +70,21 @@
       border: 1px solid #e5e7eb;
       border-radius: 0.75rem;
       background-color: #fff;
+      color: #000 !important;
     }
     
     .dark .card {
-      background-color: #0F0F12;
+      /* background-color: #0F0F12; */
       border-color: #1F1F23;
     }
     
     .header {
       height: 4rem;
-      border-bottom: 1px solid #e5e7eb;
+      /* border-bottom: 1px solid #e5e7eb; */
     }
     
     .dark .header {
-      border-bottom-color: #1F1F23;
+      /* border-bottom-color: #1F1F23; */
     }
     
     /* Mobile menu */
@@ -176,7 +175,7 @@
     // Theme toggle functionality
     const themeToggle = document.getElementById('theme-toggle');
     const appContainer = document.getElementById('app-container');
-    appContainer.classList.add('dark');
+    // appContainer.classList.add('dark');
     // Check for saved theme preference or use system preference
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -218,6 +217,7 @@
         profileDropdownContent.classList.add('hidden');
       }
     });
+
   </script>
 </body>
 </html>

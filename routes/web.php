@@ -35,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('admin/valvulas/{id?}', [ValvulasController::class, 'update'])->name('valvulas.update');
     Route::delete('admin/valvulas/{id?}', [ValvulasController::class, 'destroy'])->name('valvulas.destroy');
     Route::get('admin/valvulas/{id?}', [ValvulasController::class, 'show'])->name('valvulas.show');
+    
+    Route::get('admin/valvulas/{id?}/intervencion', [ValvulasController::class, 'agregarPestañaDeIntervencion'])->name('valvulas.agregarPestañaDeIntervencion');
 
     // Empresas vavulas
     Route::get('admin/clientes/valvulas', [EmpresasValvulasController::class, 'index'])->name('clientes.valvulas');
@@ -44,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('admin/clientes/valvulas/{id}', [EmpresasValvulasController::class, 'update'])->name('clientes.valvulas.update');
     Route::delete('admin/clientes/valvulas/{id}', [EmpresasValvulasController::class, 'destroy'])->name('clientes.valvulas.destroy');
 
+
     // Empresas vavulas
     Route::get('admin/marcas/valvulas', [MarcasValvulasController::class, 'index'])->name('marcas.valvulas');
     Route::get('admin/marcas/valvulas/create', [MarcasValvulasController::class, 'create'])->name('marcas.valvulas.create');
@@ -51,6 +54,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('admin/marcas/valvulas/{id}/edit', [MarcasValvulasController::class, 'edit'])->name('marcas.valvulas.edit');
     Route::put('admin/marcas/valvulas/{id}', [MarcasValvulasController::class, 'update'])->name('marcas.valvulas.update');
     Route::delete('admin/marcas/valvulas/{id}', [MarcasValvulasController::class, 'destroy'])->name('marcas.valvulas.destroy');
+    
+    
     
     // Purgadores
     Route::get('admin/purgadores', [PurgadoresController::class, 'index'])->name('purgadores');

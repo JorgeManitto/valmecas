@@ -4,8 +4,8 @@
 
   <div class="">
     <div class="card p-4 flex flex-col gap-4">
-      <h2 class="text-lg font-semibold text-white">Bienvenido a Valmecas</h2>
-      <p class="text-sm  text-white">Your dashboard is ready to use.</p>
+      <h2 class="text-lg font-semibold text-black">Bienvenido a Valmecas</h2>
+      <p class="text-sm  text-black">Your dashboard is ready to use.</p>
     </div>
   </div>
 </div>

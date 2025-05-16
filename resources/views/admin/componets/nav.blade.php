@@ -1,4 +1,4 @@
-<header class="header bg-white dark:bg-[#0F0F12]">
+<header class="header bg-white dark:bg-[#0F0F12] dark:border-[#1F1F23] border-b border-gray-200">
   <nav class="px-3 sm:px-6 flex items-center justify-between h-full">
     <div class="font-medium text-sm hidden sm:flex items-center space-x-1 truncate max-w-[300px]">
       <div class="flex items-center">

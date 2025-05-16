@@ -28,7 +28,7 @@
         <div class="relative w-full sm:w-64 flex items-center gap-0" >
           <div>
             <i data-lucide="search" class="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400"></i>
-            <input type="search" value="{{ $search }}" name="search" placeholder="admin@ejemplo.com" class="pl-9 bg-gray-500 dark:bg-[#1F1F23] border-gray-200 dark:border-[#2B2B30] h-9 text-sm text-gray-400">
+            <input type="search" value="{{ $search }}" name="search" placeholder="admin@ejemplo.com" class="pl-9 bg-gray-200 dark:bg-[#1F1F23] border-gray-200 dark:border-[#2B2B30] h-9 text-sm text-gray-400">
           </div>
           <button type="submit" class="rounded-lg bg-red-600 text-white cursor-pointer" style="padding: 0.4em;border-radius: 0 10px 10px 0;">Buscar</button>
         </div>

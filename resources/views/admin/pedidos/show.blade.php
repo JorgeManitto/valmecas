@@ -1,6 +1,7 @@
 @extends('admin.layout')
 @section('content') 
 
+
 <form action="{{ route($method, ['pedido' => '1']) }}" method="post" enctype="multipart/form-data" >
   @csrf
   @if ($method == 'pedidos.update')

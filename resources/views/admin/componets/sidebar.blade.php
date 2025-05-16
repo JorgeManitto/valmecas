@@ -1,9 +1,14 @@
     <!-- Sidebar -->
-    <nav class="sidebar" id="sidebar">
+    <nav class="sidebar bg-[#FFF] dark:bg-[#0F0F12]" id="sidebar">
       <div class="h-full flex flex-col">
-        <a href="#" target="_blank" rel="noopener noreferrer" class="h-16 px-6 flex items-center border-b border-gray-200 dark:border-[#1F1F23]">
+        <a href="#" target="_blank" rel="noopener noreferrer" class="h-16 px-6 hidden dark:flex items-center border-b border-gray-200 dark:border-[#1F1F23] dark:bg-[#0F0F12]">
           <div class="flex items-center gap-3">
             <img src="{{ asset('logoweb2.png') }}" alt="logo Valmecas" class="flex-shrink-0" style="height: 90px;padding: 1em; ">
+          </div>
+        </a>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="h-16 px-6 flex items-center border-b border-gray-200 dark:border-[#1F1F23] dark:bg-[#0F0F12] dark:hidden ">
+          <div class="flex items-center gap-3">
+            <img src="{{ asset('logoweb2-old.png') }}" alt="logo Valmecas" class="flex-shrink-0" style="height: 90px;padding: 1em; ">
           </div>
         </a>
 
@@ -22,7 +27,7 @@
               </div>
             </div>
 
-            <div>
+            {{-- <div>
               <div class="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center">
                 <i data-lucide="folder" class="h-4 w-4 mr-3 flex-shrink-0"></i>
                   Archivos
@@ -37,8 +42,8 @@
                 </a>
 
               </div>
-            </div>
-            <div>
+            </div> --}}
+            {{-- <div>
               <div class="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center">
                 <i data-lucide="shopping-cart" class="h-4 w-4 mr-3 flex-shrink-0"></i>
                   Pedidos
@@ -53,7 +58,7 @@
                 </a>
 
               </div>
-            </div>
+            </div> --}}
 
             <div>
               <div class="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center">
@@ -92,7 +97,7 @@
               </div> --}}
             </div>
 
-            <div>
+            {{-- <div>
               <div class="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center">
                 <i data-lucide="align-vertical-distribute-end" class="h-4 w-4 mr-3 flex-shrink-0"></i>
                 Purgadores
@@ -117,7 +122,7 @@
                 </a>
 
               </div>
-            </div>
+            </div> --}}
 
             <div>
               <div class="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">

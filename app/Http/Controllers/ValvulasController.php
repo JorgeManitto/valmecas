@@ -63,7 +63,7 @@ class ValvulasController extends Controller
      */
     public function store(Request $request)
     {
-        $params = $this->returnParams($request);
+        $params = $this->returnParams($request, 'store');
         $valvula = Valvula::create($params);
         return redirect()->route('valvulas')->with('success', 'Valvula creada correctamente');
     }
@@ -109,6 +109,15 @@ class ValvulasController extends Controller
         $empresas   = EmpresasValvula::where('estado', 'activo')->get();
         $modelos    = MarcaValvula::where('estado', 'activo')->get();
 
+        $valvulaPadre = Valvula::where('id', $valvula->tiene_padre)->first();
+        // dd($valvulaPadre);  
+        if ($valvulaPadre) {
+            $valvulaHijos = Valvula::where('tiene_padre', $valvulaPadre->id)->get();
+        } else {
+            $valvulaPadre = $valvula;
+            $valvulaHijos = Valvula::where('tiene_padre', $valvula->id)->get();
+        }
+
         $imagenes = [];
         $tag = $valvula->tag_item;
 
@@ -134,7 +143,7 @@ class ValvulasController extends Controller
             }
         }
         // dd( $imagenes);
-        return view('admin.valvulas.show', compact('valvula','method','empresas','modelos','imagenes'));
+        return view('admin.valvulas.show', compact('valvula','method','empresas','modelos','imagenes','valvulaHijos','valvulaPadre'));
     }
 
     /**
@@ -144,7 +153,7 @@ class ValvulasController extends Controller
     {
         $valvula = Valvula::findOrFail($request->id);
         // dd($request);
-        $params = $this->returnParams($request);
+        $params = $this->returnParams($request, 'update');
         $valvula->update($params);
         if ($request->finaliz == 'Si') {
             $res = $this->enviarCorreo('basevalvulas@valmecas.com', $valvula->cliente.' '.$valvula->tag_item, $this->contenidoDeCorreo($valvula));
@@ -278,7 +287,7 @@ class ValvulasController extends Controller
         return $content;
     }
 
-    public function returnParams($request){
+    public function returnParams($request, $from){
         // ACÁ BAJO FALTAN AGRGAR VALORES (MARCAR TODO EL FORM Y LUEGO SACAR TODAS LAS VARIABLES) (algunos checkbos tiran "on" (cambiar por si o no))
         // $fentraFormateada = $request->fentra ? \Carbon\Carbon::createFromFormat('Y-m-d', $request->fentra)->format('d-m-Y') : '';
         $fentraFormateada = $request->fentra ?? '';
@@ -538,28 +547,361 @@ class ValvulasController extends Controller
             'grafica_presion2' => $request->grafica_presion2 ?? '',
             'estado_incidencia_grave' => $request->estado_incidencia_grave ?? '',
             'modified' => now(),
-            'file_imagen1' => $request->file_imagen1 ?? '',
-            'adjunto' => $request->adjunto ?? '',
-            'adjunto1' => $request->adjunto1 ?? '',
-            'adjunto2' => $request->adjunto2 ?? '',
+            
+            
         ];
+        if ($from == 'store') {
+            $params['file_imagen1'] = $request->file_imagen1 ?? '';
+            $params['adjunto'] = $request->adjunto ?? '';
+            $params['adjunto1'] = $request->adjunto1 ?? '';
+            $params['adjunto2'] = $request->adjunto2 ?? '';
+        } 
+            
 
-        if ($request->file_imagen1) {
-            $params['file_imagen1'] = $request->file_imagen1->store('valvulas', 'public');
+        if ($request->hasFile('file_imagen1') && $request->file('file_imagen1')->isValid()) {
+            $params['file_imagen1'] = $request->file('file_imagen1')->store('valvulas', 'public');
         }
-        if ($request->file_oca) {
-            $params['file_oca'] = $request->file_oca->store('valvulas', 'public');
+
+        if ($request->hasFile('file_oca') && $request->file('file_oca')->isValid()) {
+            $params['file_oca'] = $request->file('file_oca')->store('valvulas', 'public');
         }
-        if ($request->adjunto) {
-            $params['adjunto'] = $request->adjunto->store('valvulas', 'public');
+
+        if ($request->hasFile('adjunto') && $request->file('adjunto')->isValid()) {
+            $params['adjunto'] = $request->file('adjunto')->store('valvulas', 'public');
         }
-        if ($request->adjunto1) {
-            $params['adjunto1'] = $request->adjunto1->store('valvulas', 'public');
+
+        if ($request->hasFile('adjunto1') && $request->file('adjunto1')->isValid()) {
+            $params['adjunto1'] = $request->file('adjunto1')->store('valvulas', 'public');
         }
-        if ($request->adjunto2) {
-            $params['adjunto2'] = $request->adjunto2->store('valvulas', 'public');
+
+        if ($request->hasFile('adjunto2') && $request->file('adjunto2')->isValid()) {
+            $params['adjunto2'] = $request->file('adjunto2')->store('valvulas', 'public');
         }
+
 
         return $params;                
+    }
+    function agregarPestañaDeIntervencion($id) {
+        $valvula = Valvula::findOrFail($id);
+        $idNuevoPadre = $valvula->id;
+        $valvulaPadre = null;
+
+        if ($valvula->tiene_padre) {
+            $valvulaPadre = Valvula::find($valvula->tiene_padre);
+            $idNuevoPadre = $valvulaPadre->id;
+        }
+        $tag_item = $valvula->tag_item;
+
+        //Buscar valvula hijo
+        $valvulaHijo = Valvula::where('tiene_padre', $idNuevoPadre)->orderBy('id', 'desc')->first();
+        if ($valvulaHijo) {
+            $tag_item = $valvulaHijo->tag_item;
+        }
+
+        if (preg_match('/\((\d+)\)/', $tag_item)) {
+            // Si ya tiene un número entre paréntesis, lo incrementamos
+            $updated_tag_item = preg_replace_callback('/\((\d+)\)/', function ($matches) {
+                $number = (int)$matches[1];
+                $number++;
+                return "($number)";
+            }, $tag_item);
+        } else {
+            // Si no tiene paréntesis, agregamos (2)
+            $updated_tag_item = $tag_item . '(2)';
+        }
+
+        $params = $this->returnParamsIntervencion($valvula);
+        // dd($params);
+        $params['tag_item'] = $updated_tag_item;
+        $params['tag'] = $updated_tag_item;
+        $params['tiene_padre'] = $idNuevoPadre;
+        
+        $nuevaValvula = Valvula::create($params);
+
+        return redirect()->route('valvulas.edit', ['id' => $nuevaValvula->id])->with('success', 'Valvula creada correctamente');
+    }
+
+    function returnParamsIntervencion($request) {
+        $fentraFormateada = $request->fentra ?? '';
+        $fsalidaFormateada = $request->fentra ?? '';
+        $params = [
+            'tag' => $request->tag_item ?? '',
+            'ident' => '',
+            'repuesto2' => '',
+            'repuesto3' => '',
+            'repuesto4' => '',
+            'recomendaciones' => $request->recomendaciones ?? '',
+            'rating' => '', // aca tenemos que ver la edicion de valmecas
+            'storage_id' => '10',
+            'user_id' => auth()->user()->id,
+            'created_by' => auth()->user()->name,
+            'modified_user_id' => '1',
+            'modified_by' => 'jorge manitto',
+            "oferta" => $request->oferta ?? '',
+            "cliente" => $request->cliente ?? '',
+            "origen" => $request->origen ?? '',
+            "finaliz" => $request->finaliz ?? '',
+            "wo" => $request->wo ?? '',
+            "recepciona" => $request->recepciona ?? '',
+            "fentra" => $fentraFormateada,
+            "fsalida" =>$fsalidaFormateada ?? '',
+            "sector" => $request->sector ?? '',
+            "tag_item" => $request->tag_item ?? '',
+            "modelo" => $request->modelo ?? '',
+            "tipo" => $request->tipo ?? '',
+            "accionamiento" => $request->accionamiento ?? '',
+            "diametro" => $request->diametro ?? '',
+            "juntabridaentrada" => $request->juntabridaentrada ?? '',
+            "juntabridasalida" => $request->juntabridasalida ?? '',
+            "material_cuerpo" => $request->material_cuerpo ?? '',
+            "material_bonete" =>  $request->material_bonete ?? '',
+            "materialasiento" => $request->materialasiento ?? '',
+            "tipounion" => $request->tipounion ?? '',
+            "materialcierre" =>  $request->materialcierre ?? '',
+            "tipocierre" => $request->tipocierre ?? '',
+
+            "repuesto_cuerpo" => '',
+            "u_repuesto_cuerpo" => '',
+            "estcuerpo1" => '',
+            "estcuerpo2" => '',
+            "estbridas1" => '',
+            "estbridas2" => '',
+            "estasiencuer1" => '',
+            "estasiencuer2" => '',
+            "estasienobtu1" => '',
+            "estasienobtu2" => '',
+            "estsopor1" => '',
+            "estsopor2" => '',
+            "repuesto_bridas" => '',
+            "u_repuesto_bridas" => '',
+            "repuesto_asientocuerpo" => '',
+            "u_repuesto_asientocuerpo" => '',
+            "repuesto_asientoobturador" => '',
+            "u_repuesto_asientoobturador" => '',
+            "repuesto_soporteclapleta" => '',
+            "u_repuesto_soporteclapeta" => '',
+            "repuesto_husillo" => '',
+            "u_repuesto_husillo" => '',
+            "esthusillo1" => '',
+            "esthusillo2" => '',
+            "repuesto_tuerca" => '',
+            "u_repuesto_tuerca" => '',
+            "esttuerca1" => '',
+            "esttuerca2" => '',
+            "repuesto_puente" => '',
+            "u_repuesto_puente" => '',
+            "estpuente1" => '',
+            "estpuente2" => '',
+            "repuesto_reductora" => '',
+            "u_repuesto_reductora" => '',
+            "estreduc1" => '',
+            "estreduc2" => '',
+            "repuesto_juntacuerpo" => '',
+            "u_repuesto_juntacuerpo" => '',
+            "estjuntacuerp1" => '',
+            "estjuntacuerp2" => '',
+            "repuesto_esparragos" => '',
+            "u_repuesto_esparragos" => '',
+            "estesparr1" => '',
+            "estesparr2" => '',
+            "repuesto_backseat" => '',
+            "u_repuesto_backseat" => '',
+            "estbackseat1" => '',
+            "estbackseat2" => '',
+            "repuesto_resorte" => '',
+            "u_repuesto_resorte" => '',
+            "estresorte1" => '',
+            "estresorte2" => '',
+            "repuesto_empaquetadura" => '',
+            "u_repuesto_empaquetadura" => '',
+            "estempaque1" => '',
+            "estempaque2" => '',
+            "repuesto_linterna" => '',
+            "u_repuesto_linterna" => '',
+            "estlinter1" => '',
+            "estlinter2" => '',
+            "repuesto_prensa" => '',
+            "u_repuesto_prensa" => '',
+            "estprensa1" => '',
+            "estprensa2" => '',
+            "repuesto_volante" => '',
+            "u_repuesto_volante" => '',
+            "estvolant1" => '',
+            "estvolant2" => '',
+            "repuesto_fuelle" => '',
+            "u_repuesto_fuelle" => '',
+            "estfuelle1" => '',
+            "estfuelle2" => '',
+            "repuesto_guias" => '',
+            "u_repuesto_guias" => '',
+            "estguias1" => '',
+            "estguias2" => '',
+            "repuesto_nombreclienteinformado" => '',
+            "fecha_informdasolicitudrepuestos" => '',
+            "repuestos_listadoext_externo" => '',
+            "repuesto1" => '',
+            "montdesm_arnes" => $request->montdesm_arnes ?? '',
+            "montdesm_andamio" => $request->montdesm_andamio ?? '',
+            "montdesm_grua" => $request->montdesm_grua ?? '',
+            "montdesm_gruagranton" => $request->montdesm_gruagranton ?? '',
+            "montdesm_tractel" => $request->montdesm_tractel ?? '',
+            "quitar_calorifugado" => $request->quitar_calorifugado ?? '',
+            "ubicacion_altura" => $request->ubicacion_altura ?? '',
+            "bancoutiliz" => '',
+            "manom1" => '',
+            "manom2" => '',
+            "pares_apriete" => '',
+            "pares_apriete_otros" => '',
+            "jundint1" => $request->jundint1 ?? '',
+            "jundint2" => $request->jundint2 ?? '',
+            "jundint3" => $request->jundint3 ?? '',
+            "jundint4" => $request->jundint4 ?? '',
+            "jundex1" =>  $request->jundex1 ?? '',
+            "jundex2" =>  $request->jundex2 ?? '',
+            "jundex3" =>  $request->jundex3 ?? '',
+            "jundex4" =>  $request->jundex4 ?? '',
+            "jungrues1" => $request->jungrues1 ?? '',
+            "jungrues2" => $request->jungrues2 ?? '',
+            "jungrues3" => $request->jungrues3 ?? '',
+            "jungrues4" => $request->jungrues4 ?? '',
+            "juntipo1" => $request->juntipo1 ?? '',
+            "juntipo2" => $request->juntipo2 ?? '',
+            "juntipo3" => $request->juntipo3 ?? '',
+            "juntipo4" => $request->juntipo4 ?? '',
+            "juncantid1" => $request->juncantid1 ?? '',
+            "juncantid2" => $request->juncantid2 ?? '',
+            "juncantid3" => $request->juncantid3 ?? '',
+            "juncantid4" => $request->juncantid4 ?? '',
+            "pr_visual_cuerpo" => '',
+            "pr_visual_cierres" => '',
+            "pr_visual_tarado" => '',
+            "pr_visual_fuelles" => '',
+            "prestrcuerp" => '',
+            "prestrbacks" => '',
+            "prestrasb" => '',
+            "prestra" => '',
+            "presprcuerp" => '',
+            "presprbacks" => '',
+            "presprb" => '',
+            "prespra" => '',
+            "tempcuerp" => '',
+            "tempbacks" => '',
+            "tempb" => '',
+            "tempa" => '',
+            "caudcuerp" => '',
+            "caudbacks" => '',
+            "caudb" => '',
+            "cauda" => '',
+            "fluidcuer" => '',
+            "fluidbacks" => '',
+            "fluidb" => '',
+            "fluida" => '',
+            "dircccuerp" => '',
+            "direccbacks" => '',
+            "direccb" => '',
+            "direcca" => '',
+            "gotacuer" => '',
+            "gotabacks" => '',
+            "gotab" => '',
+            "gotaa" => '',
+            "duracion_prueba_cuerpo" => '',
+            "duracion_prueba_backseat" => '',
+            "duracion_prueba_asientosbp" => '',
+            "duracion_prueba_asientosap" => '',
+            "pruebcuer" => '',
+            "pruebacks" => '',
+            "pruebb" => '',
+            "prueba" => '',
+            "avance_entre_bridas" => '',
+            "cota_alto" => '',
+            "cota_ancho" => '',
+            "cota_profundidad" => '',
+            "cota_posicion_actuador" => '',
+            "prepopping" => '',
+            "svfluidpru" =>  '',
+            "svprdisp" => '',
+            "svcriteracep" =>  '',
+            "svprfuga90" =>  '',
+            "svlimsup" =>  '',
+            "svfugperm" =>  '',
+            "svliminf" =>  '',
+            "pr_fuelle" =>  '',
+            "sv1dispval" =>  '',
+            "svprobtur" =>  '',
+            "svprestr" =>  '',
+            "svtipofuga" =>  '',
+            "svdispvacio" =>  '',
+            "svprfugacep" => '',
+            "svprtardacep" =>  '',
+            "sva" => '',
+            "svb" => '',
+            "svc" => '',
+            "svd" => '',
+            "sve" => '',
+            "svf" => '',
+            "svg" => '',
+            "svh" => '',
+            "svi" => '',
+            "svj" => '',
+            "svk" => '',
+            "diametrosalida" => '',
+            "ratingsalida" => '',
+            'incidencia_grave' => '',
+            'par_apriete_paso1' => '',
+            'par_apriete_paso2' => '',
+            'par_apriete_paso3' => '',
+            'file_oca' => '',
+            'motivo_rep' => '',
+            'valvseg_existevalv_bloqueo' => '',
+            'valvseg_fugavalv_bloqueo' =>'',
+            'equipo_protege' => '',
+            'descarga_atmosfera' => '',
+            'oca' => '',
+            'nomb_oca' =>'',
+
+            "fmano2" => '', //fmano2 no tiene ningun valor en la base
+            'svcriteracep13' => '',// en la web actual valmecas, no hay inputs con estos datos. En la base hay datos pero parecen ser muy viejos.
+            'svcriteracep097' => '',// en la web actual valmecas, no hay inputs con estos datos. En la base hay datos pero parecen ser muy viejos.
+            'svprfuga090' => '',// en la web actual valmecas, no hay inputs con estos datos. En la base hay datos pero parecen ser muy viejos.
+            'codigoqr' => '', // en la web actual valmecas, no hay inputs con estos datos. En la base hay datos pero parecen ser muy viejos.
+            'pdf_export' => '',// en la web actual valmecas, no hay inputs con estos datos. En la base hay datos pero parecen ser muy viejos.
+            'ubicacion_longitud' => '', //esto parece ser muy viejo
+            'ubicacion_latitud' => '', //esto parece ser muy viejo
+            'ubicacion_link' => '',
+            'presion_prepopping' => '',
+            'identif_correcta' => '',
+            'valv_nueva_marcasdesper' => '',
+            'grafica_presion' => '',
+            'imagen_antesreparacion' => '',
+            
+            'pruebaimg' => '',
+            'grafica_presion1' => '',
+            'grafica_presion2' => '',
+            'estado_incidencia_grave' => '',
+            'modified' => now(),
+            'file_imagen1' => '',
+            'adjunto' => '',
+            'adjunto1' => '',
+            'adjunto2' => '',
+        ];
+
+       
+        if ($request->file_imagen1 ) {
+            $params['file_imagen1'] = $request->file_imagen1;
+        }
+        if ($request->file_oca) {
+            $params['file_oca'] = $request->file_oca;
+        }
+        if ($request->adjunto) {
+            $params['adjunto'] = $request->adjunto;
+        }
+        if ($request->adjunto1) {
+            $params['adjunto1'] = $request->adjunto1;
+        }
+        if ($request->adjunto2) {
+            $params['adjunto2'] = $request->adjunto2;
+        }
+        
+        return $params;
     }
 }
